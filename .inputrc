@@ -1,4 +1,4 @@
-" .inputrc file contents, for VIM commands in terminal
-" set editing-mode vi
-" set keymap vi-command
+# .inputrc file contents, for VIM commands in terminal
+set editing-mode vi
+set keymap vi-command
 
