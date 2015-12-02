@@ -2,7 +2,7 @@
 
 export GRADLE_HOME=/usr/local/Cellar/gradle/
 export ANDROID_HOME=/usr/local/opt/android-sdk
-export GOPATH=/Users/admin/go
+export GOPATH=$HOME/go
 
 export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:$GOPATH/bin
