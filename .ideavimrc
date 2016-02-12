@@ -8,6 +8,7 @@ map <leader>k <C-W>k
 map <leader>l <C-W>l
 
 map <leader>ul :action Run<CR>
+map <leader>t :action SearchEverywhere<CR>
 
 " not implemented yet. See https://github.com/JetBrains/ideavim/pull/86
 " map gc :action CommentByLineComment<CR>
