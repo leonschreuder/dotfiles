@@ -1,0 +1,39 @@
+# This is a custom settings file, that imports specific settings files when they are simlinked to home
+
+
+# alias ctags='/usr/local/bin/ctags'
+
+
+
+export EDITOR=vim
+
+
+if hash go 2>/dev/null; then
+	export GOPATH=$HOME/go
+	export PATH=$PATH:$GOPATH/bin
+fi
+
+
+# P4 settings
+if hash p4 2>/dev/null; then
+	export P4PORT=perforce-erl.eso.local:1666
+	export P4CHARSET=winansi
+
+	export P4USER=lemo7242
+	export P4HOST=ESO7369-ubuntu
+
+	export P4CLIENT=lemo7242_mib2p_ESO7369-ubuntu_devmain_GRADLE
+	# export P4CLIENT=lemo7242_mib2p_ESO7369-ubuntu_devmain
+fi
+
+
+# Linuxbrew settings
+if [ -x $HOME.linuxbrew/bin/brew ]; then
+	export PATH="$HOME/.linuxbrew/bin:$PATH"
+	export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+	export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+	export PATH="/home/lemo7242/.linuxbrew/sbin:$PATH"
+fi
+
+
+
