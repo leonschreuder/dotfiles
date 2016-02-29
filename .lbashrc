@@ -1,15 +1,18 @@
-
+#!/bin/sh
+# 
 # Local-bashrc file. This is a completely customised settings file that only
-# has custom settings in it. Import it from the local .bashrc or .bash_profile
-# with the following:
+# has custom, system independent, settings in it. First symlink it from home:
+#   $ ln -s /path/to/dotfiles/.lbashrc
+#
+# Then import it from the local .bashrc or .bash_profile with the following:
+#
 #   [[ -s ~/.lbashrc ]] && source ~/.lbashrc
 
 
-# alias ctags='/usr/local/bin/ctags'
 
 
-# TODO: just symlink it from some common place (/usr/local/bin?), so that it
-# can be system-independent
+# TODO: just symlink the Java versions from some common place
+# (/usr/local/bin?), so that it can be system-independent
 export JAVA7_HOME=/opt/jdk1.7.0_45
 export JAVA8_HOME=/opt/jdk1.8.0_05
 
@@ -20,7 +23,7 @@ export PATH=$JAVA_HOME:$PATH
 
 
 
-# GO
+# Go
 #----------------------------------------
 if hash go 2>/dev/null; then
 	export GOPATH=$HOME/go
@@ -75,3 +78,5 @@ export ANDROID_HOME=/usr/local/opt/android-sdk
 if hash par 2>/dev/null; then
     export PARINIT='rTbgqR B=.,?_A_a P=_s Q=>|}'
 fi
+
+# alias ctags='/usr/local/bin/ctags'
