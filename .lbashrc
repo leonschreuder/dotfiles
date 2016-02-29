@@ -1,10 +1,15 @@
-# This is a custom settings file, that imports specific settings files when they are simlinked to home
+
+# Local-bashrc file. This is a completely customised settings file that only
+# has custom settings in it. Import it from the local .bashrc or .bash_profile
+# with the following:
+#   [[ -s ~/.lbashrc ]] && source ~/.lbashrc
 
 
 # alias ctags='/usr/local/bin/ctags'
 
 
-
+# TODO: just symlink it from some common place (/usr/local/bin?), so that it
+# can be system-independent
 export JAVA7_HOME=/opt/jdk1.7.0_45
 export JAVA8_HOME=/opt/jdk1.8.0_05
 
@@ -12,6 +17,7 @@ export EDITOR=vim
 export PATH=$HOME/bin:$PATH
 export JAVA_HOME=$JAVA7_HOME
 export PATH=$JAVA_HOME:$PATH
+
 
 
 # GO
@@ -24,7 +30,6 @@ fi
 
 # P4
 #----------------------------------------
-
 if hash p4 2>/dev/null; then
 	export P4PORT=perforce-erl.eso.local:1666
 	export P4CHARSET=winansi
@@ -52,5 +57,21 @@ if [ -x $HOME/.linuxbrew/bin/brew ]; then
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
 fi
 
+if [ -x /usr/local/bin/brew ]; then
+    export BREW_HOME="/usr/local/"
+fi
+
+# Gradle
+#----------------------------------------
+if hash gradle 2>/dev/null; then
+    export GRADLE_HOME=$BREW_HOME/Cellar/gradle/
+fi
+
+export ANDROID_HOME=/usr/local/opt/android-sdk
 
 
+# Par
+#----------------------------------------
+if hash par 2>/dev/null; then
+    export PARINIT='rTbgqR B=.,?_A_a P=_s Q=>|}'
+fi
