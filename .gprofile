@@ -1,0 +1,81 @@
+#!/bin/sh
+# 
+# Global-profile file. This is a completely customised settings file that only
+# has custom, system independent, settings in it. First symlink it from home:
+#   $ ln -s /path/to/dotfiles/.lbashrc
+#
+# Then import it from the local .bashrc/.bash_profile/.profile with the
+# following:
+#
+#   [[ -s ~/.gprofile ]] && source ~/.gprofile
+
+
+
+
+# TODO: just symlink the Java versions from some common place
+# (/usr/local/bin?), so that it can be system-independent
+export JAVA7_HOME=/opt/jdk1.7.0_45
+export JAVA8_HOME=/opt/jdk1.8.0_05
+
+export EDITOR=vim
+export PATH=$HOME/bin:$PATH
+export JAVA_HOME=$JAVA7_HOME
+export PATH=$JAVA_HOME:$PATH
+
+
+
+# Go
+#----------------------------------------
+if hash go 2>/dev/null; then
+	export GOPATH=$HOME/go
+	export PATH=$PATH:$GOPATH/bin
+fi
+
+
+# P4
+#----------------------------------------
+if hash p4 2>/dev/null; then
+    [[ -s ~/.p4rc ]] && source ~/.p4rc
+    echo "p4 settings file not found"
+fi
+
+
+# Homebrew
+#----------------------------------------
+if [ -x /usr/local/bin/brew ]; then
+    export BREW_HOME="/usr/local/"
+    export PATH="/usr/local/bin:$PATH"  #Put brew/bin in front of standard bin in PATH
+fi
+
+
+# Linuxbrew
+#----------------------------------------
+if [ -x $HOME/.linuxbrew/bin/brew ]; then
+    export BREW_HOME="$HOME/.linuxbrew"
+
+	export PATH="$BREW_HOME/bin:$BREW_HOME/sbin:$PATH"
+	export MANPATH="$BREW_HOME/share/man:$MANPATH"
+	export INFOPATH="$BREW_HOME/share/info:$INFOPATH"
+
+    export PKG_CONFIG_PATH=$BREW_HOME/lib/pkgconfig:$BREW_HOME/share/pkgconfig:$BREW_HOME/Library/ENV/pkgconfig/0
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig   
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
+fi
+
+
+# Gradle
+#----------------------------------------
+if hash gradle 2>/dev/null; then
+    export GRADLE_HOME=$BREW_HOME/Cellar/gradle/
+fi
+
+export ANDROID_HOME=/usr/local/opt/android-sdk
+
+
+# Par
+#----------------------------------------
+if hash par 2>/dev/null; then
+    export PARINIT='rTbgqR B=.,?_A_a P=_s Q=>|}'
+fi
+
+# alias ctags='/usr/local/bin/ctags'
