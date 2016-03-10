@@ -14,12 +14,13 @@
 
 # TODO: just symlink the Java versions from some common place
 # (/usr/local/bin?), so that it can be system-independent
+export JAVA6_HOME=/opt/jdk1.6.0_41
 export JAVA7_HOME=/opt/jdk1.7.0_45
 export JAVA8_HOME=/opt/jdk1.8.0_05
 
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
-export JAVA_HOME=$JAVA7_HOME
+export JAVA_HOME=$JAVA8_HOME
 export PATH=$JAVA_HOME:$PATH
 
 
@@ -35,8 +36,11 @@ fi
 # P4
 #----------------------------------------
 if hash p4 2>/dev/null; then
-    [[ -s ~/.p4rc ]] && source ~/.p4rc
-    echo "p4 settings file not found"
+    if [ -s ~/.p4rc ]; then
+        source ~/.p4rc
+    else
+        echo "p4 settings file not found"
+    fi
 fi
 
 
@@ -78,4 +82,41 @@ if hash par 2>/dev/null; then
     export PARINIT='rTbgqR B=.,?_A_a P=_s Q=>|}'
 fi
 
-# alias ctags='/usr/local/bin/ctags'
+
+
+# usage:
+# countdown 60              # 60 seconds
+# countdown $((2*60*60))    # 2 days
+countdown(){
+    date1=$((`date +%s` + $1));
+    while [ "$date1" -ge `date +%s` ]; do 
+        ## Is this more than 24h away?
+        days=$(($(($(( $date1 - $(date +%s))) * 1 ))/86400))
+        echo -ne "$days day(s) and $(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r"; 
+        sleep 0.1
+    done
+
+    aplay /home/lemo7242/leon/poing.wav
+    notify-send "Timer done"
+}
+
+
+# Custom styling
+# https://wiki.archlinux.org/index.php/Bash/Prompt_customization
+# GIT_BRANCH='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
+
+BLACK="\[$(tput setaf 0)\]"
+RED="\[$(tput setaf 1)\]"
+GREEN="\[$(tput setaf 2)\]"
+YELLOW="\[$(tput setaf 3)\]"
+BLUE="\[$(tput setaf 4)\]"
+PINK="\[$(tput setaf 5)\]"
+CYAN="\[$(tput setaf 6)\]"
+WHITE="\[$(tput setaf 7)\]"
+NO_COLLOR="\[$(tput sgr0)\]"
+
+# git comand prints branch, if something was printed sed surrounds it with '()' 
+GIT_BRANCH='`git name-rev --name-only @ 2> /dev/null | sed -e  "s/\(.*\)/(\0) /"`'
+
+# `man bash` -> PROMPTING
+export PS1="$WHITE↳$NO_COLLOR \w $GIT_BRANCH$WHITE$ $NO_COLLOR"
