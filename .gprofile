@@ -115,6 +115,7 @@ WHITE="\[$(tput setaf 7)\]"
 NO_COLLOR="\[$(tput sgr0)\]"
 
 
+# prints '(*master)' when on master. The '*' is added when there are local changes
 git_status() {
     # If the branch has changes
     `git diff --quiet --ignore-submodules HEAD 2>/dev/null`
@@ -129,5 +130,10 @@ git_status() {
     fi
 }
 
+# prints the job count when there are any
+job_count() {
+    echo `jobs | wc -l | tr -d 0`
+}
+
 # `man bash` -> PROMPTING
-export PS1="$WHITE↳$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
+export PS1="$WHITE↳ \$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
