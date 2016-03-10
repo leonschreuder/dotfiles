@@ -103,7 +103,6 @@ countdown(){
 
 # Custom styling
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
-# GIT_BRANCH='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
 
 BLACK="\[$(tput setaf 0)\]"
 RED="\[$(tput setaf 1)\]"
@@ -115,8 +114,20 @@ CYAN="\[$(tput setaf 6)\]"
 WHITE="\[$(tput setaf 7)\]"
 NO_COLLOR="\[$(tput sgr0)\]"
 
-# git comand prints branch, if something was printed sed surrounds it with '()' 
-GIT_BRANCH='`git name-rev --name-only @ 2> /dev/null | sed -e  "s/\(.*\)/(\0) /"`'
+
+git_status() {
+    # If the branch has changes
+    `git diff --quiet --ignore-submodules HEAD 2>/dev/null`
+    [ $? -eq 1 ] && local GIT_CHANGE='*'        # $? is the return value of the last command
+
+    # The branch name
+    GIT_BRANCH=`git name-rev --name-only @ 2> /dev/null`
+
+    # With at least a branch, surround it with '()'
+    if [[ -n "${GIT_BRANCH}" ]]; then
+        echo "`echo "$GIT_CHANGE$GIT_BRANCH" | sed -e 's/\(.*\)/(\1) /'`"
+    fi
+}
 
 # `man bash` -> PROMPTING
-export PS1="$WHITE↳$NO_COLLOR \w $GIT_BRANCH$WHITE$ $NO_COLLOR"
+export PS1="$WHITE↳$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
