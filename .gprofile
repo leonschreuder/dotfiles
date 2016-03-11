@@ -122,7 +122,8 @@ git_status() {
     [ $? -eq 1 ] && local GIT_CHANGE='*'        # $? is the return value of the last command
 
     # The branch name
-    GIT_BRANCH=`git name-rev --name-only @ 2> /dev/null`
+    GIT_BRANCH=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
+    
 
     # With at least a branch, surround it with '()'
     if [[ -n "${GIT_BRANCH}" ]]; then
