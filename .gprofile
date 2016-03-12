@@ -114,7 +114,6 @@ CYAN="\[$(tput setaf 6)\]"
 WHITE="\[$(tput setaf 7)\]"
 NO_COLLOR="\[$(tput sgr0)\]"
 
-
 # prints '(*master)' when on master. The '*' is added when there are local changes
 git_status() {
     # If the branch has changes
@@ -136,5 +135,7 @@ job_count() {
     echo `jobs | wc -l | tr -d 0`
 }
 
+PREQUAL='❱❱❱'
+
 # `man bash` -> PROMPTING
-export PS1="$WHITE↳ \$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
+export PS1="$WHITE$PREQUAL \$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
