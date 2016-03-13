@@ -138,9 +138,9 @@ job_count() {
 PRE_CHAR='❱'
 
 if [[ ! -n "${NESTING_DEPTH}" ]]; then
-    export NESTING_DEPTH=1
+    export LC_NESTING_DEPTH=1
 else
-    export NESTING_DEPTH=$(expr 1 + $NESTING_DEPTH)
+    export LC_NESTING_DEPTH=$(expr 1 + $NESTING_DEPTH)
 fi
 # echo NESTING_DEPTH $NESTING_DEPTH
 
