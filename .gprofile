@@ -142,11 +142,8 @@ if [[ ! -n "${LC_NESTING_DEPTH}" ]]; then
 else
     export LC_NESTING_DEPTH=$(expr 1 + $LC_NESTING_DEPTH)
 fi
-echo NESTING_DEPTH $LC_NESTING_DEPTH
 
 PS1_PREQUAL=$(printf "$PRE_CHAR"'%.s' $(eval "echo {1.."$(($LC_NESTING_DEPTH))"}");)
-# echo $str
-# export PS1_PREQUAL=$PS1_PREQUAL'❱'
 
 # `man bash` -> PROMPTING
 export PS1="$WHITE$PS1_PREQUAL\$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
