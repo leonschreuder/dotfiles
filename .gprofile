@@ -135,11 +135,18 @@ job_count() {
     echo `jobs | wc -l | tr -d 0`
 }
 
-if [[ ! -n "${PS1_PREQUAL}" ]]; then
-    export PS1_PREQUAL='❱'
+PRE_CHAR='❱'
+
+if [[ ! -n "${NESTING_DEPTH}" ]]; then
+    export NESTING_DEPTH=1
 else
-    export PS1_PREQUAL=$PS1_PREQUAL'❱'
+    export NESTING_DEPTH=$(expr 1 + $NESTING_DEPTH)
 fi
+# echo NESTING_DEPTH $NESTING_DEPTH
+
+PS1_PREQUAL=$(printf "$PRE_CHAR"'%.s' $(eval "echo {1.."$(($NESTING_DEPTH))"}");)
+# echo $str
+# export PS1_PREQUAL=$PS1_PREQUAL'❱'
 
 # `man bash` -> PROMPTING
 export PS1="$WHITE$PS1_PREQUAL\$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
