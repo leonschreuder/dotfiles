@@ -137,14 +137,14 @@ job_count() {
 
 PRE_CHAR='❱'
 
-if [[ ! -n "${NESTING_DEPTH}" ]]; then
+if [[ ! -n "${LC_NESTING_DEPTH}" ]]; then
     export LC_NESTING_DEPTH=1
 else
-    export LC_NESTING_DEPTH=$(expr 1 + $NESTING_DEPTH)
+    export LC_NESTING_DEPTH=$(expr 1 + $LC_NESTING_DEPTH)
 fi
-# echo NESTING_DEPTH $NESTING_DEPTH
+echo NESTING_DEPTH $LC_NESTING_DEPTH
 
-PS1_PREQUAL=$(printf "$PRE_CHAR"'%.s' $(eval "echo {1.."$(($NESTING_DEPTH))"}");)
+PS1_PREQUAL=$(printf "$PRE_CHAR"'%.s' $(eval "echo {1.."$(($LC_NESTING_DEPTH))"}");)
 # echo $str
 # export PS1_PREQUAL=$PS1_PREQUAL'❱'
 
