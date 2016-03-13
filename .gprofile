@@ -135,7 +135,11 @@ job_count() {
     echo `jobs | wc -l | tr -d 0`
 }
 
-PREQUAL='❱❱❱'
+if [[ ! -n "${PS1_PREQUAL}" ]]; then
+    export PS1_PREQUAL='❱'
+else
+    export PS1_PREQUAL=$PS1_PREQUAL'❱'
+fi
 
 # `man bash` -> PROMPTING
-export PS1="$WHITE$PREQUAL \$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
+export PS1="$WHITE$PS1_PREQUAL\$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
