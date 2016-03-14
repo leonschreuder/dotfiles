@@ -114,6 +114,23 @@ CYAN="\[$(tput setaf 6)\]"
 WHITE="\[$(tput setaf 7)\]"
 NO_COLLOR="\[$(tput sgr0)\]"
 
+# An extra character is added every level of nesting
+PRE_CHAR='❱'
+if [[ ! -n "${LC_NESTING_DEPTH}" ]]; then
+    export LC_NESTING_DEPTH=1
+else
+    export LC_NESTING_DEPTH=$(expr 1 + $LC_NESTING_DEPTH)
+fi
+PS1_PREQUAL=$(printf "$PRE_CHAR"'%.s' $(eval "echo {1.."$(($LC_NESTING_DEPTH))"}");)
+
+
+# prints the job count but only when there are any
+job_count() {
+    local COUNT=`jobs | wc -l`
+    [[ $COUNT -gt 0 ]] && echo "" `jobs | wc -l`
+}
+
+
 # prints '(*master)' when on master. The '*' is added when there are local changes
 git_status() {
     # If the branch has changes
@@ -121,29 +138,14 @@ git_status() {
     [ $? -eq 1 ] && local GIT_CHANGE='*'        # $? is the return value of the last command
 
     # The branch name
-    GIT_BRANCH=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
-    
+    local GIT_BRANCH=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
 
-    # With at least a branch, surround it with '()'
+    # When a git-branch could be determined, print it surrounded by '()'
     if [[ -n "${GIT_BRANCH}" ]]; then
-        echo "`echo "$GIT_CHANGE$GIT_BRANCH" | sed -e 's/\(.*\)/(\1) /'`"
+        echo "($GIT_CHANGE$GIT_BRANCH) "
     fi
 }
 
-# prints the job count when there are any
-job_count() {
-    echo `jobs | wc -l | tr -d 0`
-}
-
-PRE_CHAR='❱'
-
-if [[ ! -n "${LC_NESTING_DEPTH}" ]]; then
-    export LC_NESTING_DEPTH=1
-else
-    export LC_NESTING_DEPTH=$(expr 1 + $LC_NESTING_DEPTH)
-fi
-
-PS1_PREQUAL=$(printf "$PRE_CHAR"'%.s' $(eval "echo {1.."$(($LC_NESTING_DEPTH))"}");)
 
 # `man bash` -> PROMPTING
 export PS1="$WHITE$PS1_PREQUAL\$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
