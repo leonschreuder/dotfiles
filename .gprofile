@@ -24,25 +24,7 @@ export JAVA_HOME=$JAVA8_HOME
 export PATH=$JAVA_HOME:$PATH
 
 
-
-# Go
-#----------------------------------------
-if hash go 2>/dev/null; then
-	export GOPATH=$HOME/go
-	export PATH=$PATH:$GOPATH/bin
-fi
-
-
-# P4
-#----------------------------------------
-if hash p4 2>/dev/null; then
-    if [ -s ~/.p4rc ]; then
-        source ~/.p4rc
-    else
-        echo "p4 settings file not found"
-    fi
-fi
-
+# Note: Homebrew stuff needs to go first, otherwise the programs are not in the PATH
 
 # Homebrew
 #----------------------------------------
@@ -65,6 +47,26 @@ if [ -x $HOME/.linuxbrew/bin/brew ]; then
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig   
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
 fi
+
+
+# Go
+#----------------------------------------
+if hash go 2>/dev/null; then
+	export GOPATH=$HOME/go
+	export PATH=$PATH:$GOPATH/bin
+fi
+
+
+# P4
+#----------------------------------------
+if hash p4 2>/dev/null; then
+    if [ -s ~/.p4rc ]; then
+        source ~/.p4rc
+    else
+        echo "p4 settings file not found"
+    fi
+fi
+
 
 
 # Gradle
