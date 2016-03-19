@@ -18,6 +18,9 @@ export JAVA6_HOME=/opt/jdk1.6.0_41
 export JAVA7_HOME=/opt/jdk1.7.0_45
 export JAVA8_HOME=/opt/jdk1.8.0_05
 
+# To set the correct collor scheme in tmux
+export TERM=screen-256color-bce
+
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
 export JAVA_HOME=$JAVA8_HOME
