@@ -8,11 +8,15 @@
 # following:
 #
 #   [[ -s ~/.gprofile ]] && source ~/.gprofile
+#
+# font: https://github.com/andreberg/Meslo-Font/
 
 
 
+# To set the correct collor scheme in tmux
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
+export TERM=screen-256color-bce
 
 
 
