@@ -11,17 +11,11 @@
 
 
 
-
-# TODO: just symlink the Java versions from some common place
-# (/usr/local/bin?), so that it can be system-independent
-export JAVA6_HOME=/opt/jdk1.6.0_41
-export JAVA7_HOME=/opt/jdk1.7.0_45
-export JAVA8_HOME=/opt/jdk1.8.0_05
-
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
-export JAVA_HOME=$JAVA8_HOME
-export PATH=$JAVA_HOME:$PATH
+
+
+
 
 
 # Note: Homebrew stuff needs to go first, otherwise the programs are not in the PATH
@@ -32,7 +26,6 @@ if [ -x /usr/local/bin/brew ]; then
     export BREW_HOME="/usr/local/"
     export PATH="/usr/local/bin:$PATH"  #Put brew/bin in front of standard bin in PATH
 fi
-
 
 # Linuxbrew
 #----------------------------------------
@@ -48,6 +41,13 @@ if [ -x $HOME/.linuxbrew/bin/brew ]; then
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
 fi
 
+# Local settings
+#----------------------------------------
+if [ -s ~/.lprofile ]; then
+    source ~/.lprofile
+else
+    echo "No local settings file '.lprofile' found."
+fi
 
 # Go
 #----------------------------------------
@@ -56,27 +56,11 @@ if hash go 2>/dev/null; then
 	export PATH=$PATH:$GOPATH/bin
 fi
 
-
-# P4
-#----------------------------------------
-if hash p4 2>/dev/null; then
-    if [ -s ~/.p4rc ]; then
-        source ~/.p4rc
-    else
-        echo "p4 settings file not found"
-    fi
-fi
-
-
-
 # Gradle
 #----------------------------------------
 if hash gradle 2>/dev/null; then
     export GRADLE_HOME=$BREW_HOME/Cellar/gradle/
 fi
-
-export ANDROID_HOME=/usr/local/opt/android-sdk
-
 
 # Par
 #----------------------------------------
@@ -84,6 +68,9 @@ if hash par 2>/dev/null; then
     export PARINIT='rTbgqR B=.,?_A_a P=_s Q=>|}'
 fi
 
+
+# General Functions
+#======================================================================
 
 
 # usage:
@@ -103,7 +90,10 @@ countdown(){
 }
 
 
+
+
 # Custom styling
+#======================================================================
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
 
 BLACK="\[$(tput setaf 0)\]"
