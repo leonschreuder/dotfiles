@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # 
 # Global-profile file. This is a completely customised settings file that only
 # has custom, system independent, settings in it. First symlink it from home:
@@ -18,6 +18,14 @@ export EDITOR=vim
 export PATH=$HOME/bin:$PATH
 export TERM=screen-256color-bce
 
+
+# Local settings
+#----------------------------------------
+if [ -s ~/.lprofile ]; then
+    source ~/.lprofile
+else
+    echo "No local settings file '.lprofile' found."
+fi
 
 
 
@@ -45,19 +53,21 @@ if [ -x $HOME/.linuxbrew/bin/brew ]; then
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
 fi
 
-# Local settings
-#----------------------------------------
-if [ -s ~/.lprofile ]; then
-    source ~/.lprofile
-else
-    echo "No local settings file '.lprofile' found."
-fi
-
 # Go
 #----------------------------------------
 if hash go 2>/dev/null; then
 	export GOPATH=$HOME/go
 	export PATH=$PATH:$GOPATH/bin
+fi
+
+# P4
+#----------------------------------------
+if hash p4 2>/dev/null; then
+    if [ -s ~/.p4profile ]; then
+        source ~/.p4profile
+    else
+        echo "p4 settings file not found"
+    fi
 fi
 
 # Gradle
@@ -71,7 +81,6 @@ fi
 if hash par 2>/dev/null; then
     export PARINIT='rTbgqR B=.,?_A_a P=_s Q=>|}'
 fi
-
 
 # General Functions
 #======================================================================
