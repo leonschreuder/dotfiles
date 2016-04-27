@@ -28,6 +28,7 @@ else
 fi
 
 
+export HISTTIMEFORMAT='%F %T '
 
 
 # Note: Homebrew stuff needs to go first, otherwise the programs are not in the PATH
@@ -56,7 +57,7 @@ fi
 # Go
 #----------------------------------------
 if hash go 2>/dev/null; then
-	export GOPATH=$HOME/go
+	export GOPATH=$HOME/repos/go
 	export PATH=$PATH:$GOPATH/bin
 fi
 
@@ -72,9 +73,9 @@ fi
 
 # Gradle
 #----------------------------------------
-if hash gradle 2>/dev/null; then
-    export GRADLE_HOME=$BREW_HOME/Cellar/gradle/
-fi
+# if hash gradle 2>/dev/null; then
+#     export GRADLE_HOME=$BREW_HOME/Cellar/gradle/
+# fi
 
 # Par
 #----------------------------------------
