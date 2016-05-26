@@ -154,4 +154,4 @@ git_status() {
 
 
 # `man bash` -> PROMPTING
-export PS1="$WHITE$PS1_PREQUAL\$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
+export PS1="$BLUE$PS1_PREQUAL\$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
