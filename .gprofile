@@ -130,11 +130,19 @@ fi
 PS1_PREQUAL=$(printf "$PRE_CHAR"'%.s' $(eval "echo {1.."$(($LC_NESTING_DEPTH))"}");)
 
 
+tmux_session_count() {
+    sessionCount=`tmux ls 2> /dev/null | wc -l`
+    echo -e "\\u208$sessionCount"
+}
+
+
 # prints the job count but only when there are any
 job_count() {
     local COUNT=`jobs | wc -l`
     [[ $COUNT -gt 0 ]] && echo "" `jobs | wc -l`
 }
+
+
 
 
 # prints '(*master)' when on master. The '*' is added when there are local changes
@@ -154,4 +162,4 @@ git_status() {
 
 
 # `man bash` -> PROMPTING
-export PS1="$BLUE$PS1_PREQUAL\$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
+export PS1="$BLUE$PS1_PREQUAL\$(tmux_session_count)\$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
