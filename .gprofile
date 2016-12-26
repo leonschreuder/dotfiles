@@ -131,7 +131,7 @@ PS1_PREQUAL=$(printf "$PRE_CHAR"'%.s' $(eval "echo {1.."$(($LC_NESTING_DEPTH))"}
 
 
 tmux_session_count() {
-    sessionCount=`tmux ls 2> /dev/null | wc -l`
+    sessionCount=`tmux ls 2> /dev/null | wc -l | sed 's/^ *//'`
     echo -e "\\u208$sessionCount"
 }
 
