@@ -8,8 +8,8 @@ test_jobCountAsString_ShouldReturnEmptyStringPerDefault() {
 
     result=$( getJobCount )
 
-    if [[ $result != "" ]]; then
-        fail "expected an empty string, got $result"
+    if [[ $result != 0 ]]; then
+        fail "expected 0, got $result"
     fi
 }
 
@@ -21,7 +21,7 @@ test_jobCountAsString_ShouldCountWhenExistant() {
 
     killTillDead $(jobs -p)
 
-    expected=" 1"
+    expected=1
     if [[ $result != $expected ]]; then
         fail "expected '$expected', got '$result'"
     fi

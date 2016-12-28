@@ -154,7 +154,14 @@ getTmuxSessionCount() {
 }
 
 getPrettyJobCount() {
-    echo $(intToSuperScript $(getJobCount))
+    jobCount=$( getJobCount )
+    if [ $jobCount -gt 0 ]; then
+        echo " ⁽$(intToSuperScript $jobCount)⁾"
+        # echo "$(intToSuperScript $jobCount)"
+        # echo " $jobCount" 
+    else
+        echo ''
+    fi
 }
 
 intToSuperScript() {
@@ -168,14 +175,8 @@ intToSuperScript() {
     fi
 }
 
-# prints the job count but only when there are any
 getJobCount() {
-    jobCount=$( jobs | wc -l | bc )
-    if [ $jobCount -gt 0 ]; then
-        echo " $jobCount" 
-    else
-        echo ''
-    fi
+    echo $( jobs | wc -l | bc )
 }
 
 
@@ -198,4 +199,4 @@ git_status() {
 
 
 # `man bash` -> PROMPTING
-export PS1="$BLUE$PS1_PREQUAL\$(getPrettyTmuxSessionCount)\$(getJobCount)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
+export PS1="$BLUE\$(getPrettyTmuxSessionCount)$PS1_PREQUAL\$(getPrettyJobCount)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
