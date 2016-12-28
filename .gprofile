@@ -129,17 +129,53 @@ else
 fi
 PS1_PREQUAL=$(printf "$PRE_CHAR"'%.s' $(eval "echo {1.."$(($LC_NESTING_DEPTH))"}");)
 
-
-tmux_session_count() {
-    sessionCount=`tmux ls 2> /dev/null | wc -l | sed 's/^ *//'`
-    echo -e "\\u208$sessionCount"
+getNestingDepth() {
+    echo $(( 1 + $LC_NESTING_DEPTH ))
 }
 
+getPrequal() {
+    result=''
+    for ((i=0; i<$(getNestingDepth); i++)); do
+        result=$result$PRE_CHAR
+    done
+    echo $result
+}
+
+getPrettyTmuxSessionCount() {
+    echo $(intToSubScript $(getTmuxSessionCount))
+}
+
+intToSubScript() {
+    echo -e "\\u208$1"
+}
+
+getTmuxSessionCount() {
+    echo $(tmux ls 2> /dev/null | wc -l | bc)
+}
+
+getPrettyJobCount() {
+    echo $(intToSuperScript $(getJobCount))
+}
+
+intToSuperScript() {
+    #Unicode is sort of a mess here
+    if [ $1 == 1 ]; then
+        echo -e "\\u00B9"
+    elif [ $1 -gt 1 -a $1 -lt 4 ]; then
+        echo -e "\\u00B$1"
+    else
+        echo -e "\\u207$1"
+    fi
+}
 
 # prints the job count but only when there are any
-job_count() {
-    local COUNT=`jobs | wc -l`
-    [[ $COUNT -gt 0 ]] && echo "" `jobs | wc -l`
+getJobCount() {
+    jobCount=$( jobs | wc -l | bc )
+    if [ $jobCount -gt 0 ]; then
+        echo " $jobCount" 
+    else
+        echo ''
+    fi
 }
 
 
@@ -162,4 +198,4 @@ git_status() {
 
 
 # `man bash` -> PROMPTING
-export PS1="$BLUE$PS1_PREQUAL\$(tmux_session_count)\$(job_count)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
+export PS1="$BLUE$PS1_PREQUAL\$(getPrettyTmuxSessionCount)\$(getJobCount)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"
