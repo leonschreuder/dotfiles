@@ -83,120 +83,18 @@ if hash par 2>/dev/null; then
     export PARINIT='rTbgqR B=.,?_A_a P=_s Q=>|}'
 fi
 
-# General Functions
+# Special Functionality
 #======================================================================
 
 
-# usage:
-# countdown 60              # 60 seconds
-# countdown $((2*60*60))    # 2 days
-countdown(){
-    date1=$((`date +%s` + $1));
-    while [ "$date1" -ge `date +%s` ]; do 
-        ## Is this more than 24h away?
-        days=$(($(($(( $date1 - $(date +%s))) * 1 ))/86400))
-        echo -ne "$days day(s) and $(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r"; 
-        sleep 0.1
-    done
-
-    aplay /home/lemo7242/leon/poing.wav
-    notify-send "Timer done"
-}
+SCRIPT_PATH="${BASH_SOURCE[0]}";
+while([ -h "${SCRIPT_PATH}" ]) do 
+    SCRIPT_PATH="$(readlink "`basename "${SCRIPT_PATH}"`")"; 
+done
+SCRIPT_DIR=$(dirname $SCRIPT_PATH)
 
 
+# load aditional scripts
 
+source $SCRIPT_DIR/ps1style.sh
 
-# Custom styling
-#======================================================================
-# https://wiki.archlinux.org/index.php/Bash/Prompt_customization
-
-BLACK="\[$(tput setaf 0)\]"
-RED="\[$(tput setaf 1)\]"
-GREEN="\[$(tput setaf 2)\]"
-YELLOW="\[$(tput setaf 3)\]"
-BLUE="\[$(tput setaf 4)\]"
-PINK="\[$(tput setaf 5)\]"
-CYAN="\[$(tput setaf 6)\]"
-WHITE="\[$(tput setaf 7)\]"
-NO_COLLOR="\[$(tput sgr0)\]"
-
-# An extra character is added every level of nesting
-PRE_CHAR='❱'
-if [[ ! -n "${LC_NESTING_DEPTH}" ]]; then
-    export LC_NESTING_DEPTH=1
-else
-    export LC_NESTING_DEPTH=$(expr 1 + $LC_NESTING_DEPTH)
-fi
-PS1_PREQUAL=$(printf "$PRE_CHAR"'%.s' $(eval "echo {1.."$(($LC_NESTING_DEPTH))"}");)
-
-getNestingDepth() {
-    echo $(( 1 + $LC_NESTING_DEPTH ))
-}
-
-getPrequal() {
-    result=''
-    for ((i=0; i<$(getNestingDepth); i++)); do
-        result=$result$PRE_CHAR
-    done
-    echo $result
-}
-
-getPrettyTmuxSessionCount() {
-    echo $(intToSubScript $(getTmuxSessionCount))
-}
-
-intToSubScript() {
-    echo -e "\\u208$1"
-}
-
-getTmuxSessionCount() {
-    echo $(tmux ls 2> /dev/null | wc -l | bc)
-}
-
-getPrettyJobCount() {
-    jobCount=$( getJobCount )
-    if [ $jobCount -gt 0 ]; then
-        echo " ⁽$(intToSuperScript $jobCount)⁾"
-        # echo "$(intToSuperScript $jobCount)"
-        # echo " $jobCount" 
-    else
-        echo ''
-    fi
-}
-
-intToSuperScript() {
-    #Unicode is sort of a mess here
-    if [ $1 == 1 ]; then
-        echo -e "\\u00B9"
-    elif [ $1 -gt 1 -a $1 -lt 4 ]; then
-        echo -e "\\u00B$1"
-    else
-        echo -e "\\u207$1"
-    fi
-}
-
-getJobCount() {
-    echo $( jobs | wc -l | bc )
-}
-
-
-
-
-# prints '(*master)' when on master. The '*' is added when there are local changes
-git_status() {
-    # If the branch has changes
-    `git diff --quiet --ignore-submodules HEAD 2>/dev/null`
-    [ $? -eq 1 ] && local GIT_CHANGE='*'        # $? is the return value of the last command
-
-    # The branch name
-    local GIT_BRANCH=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
-
-    # When a git-branch could be determined, print it surrounded by '()'
-    if [[ -n "${GIT_BRANCH}" ]]; then
-        echo "($GIT_CHANGE$GIT_BRANCH) "
-    fi
-}
-
-
-# `man bash` -> PROMPTING
-export PS1="$BLUE\$(getPrettyTmuxSessionCount)$PS1_PREQUAL\$(getPrettyJobCount)$NO_COLLOR \w \$(git_status)$WHITE$ $NO_COLLOR"

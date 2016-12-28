@@ -1,6 +1,6 @@
 
 setup() {
-    source .gprofile
+    source ./ps1style.sh
 }
 
 test_jobCountAsString_ShouldReturnEmptyStringPerDefault() {
@@ -37,10 +37,10 @@ test_getNestingDepth() {
     fi
 }
 
-test_getPrequal() {
+test_getNestingDepthIndicator() {
     nestingDepth=$(getNestingDepth)
 
-    result=$( getPrequal )
+    result=$( getNestingDepthIndicator )
 
     if [[ ${#result} != $nestingDepth ]]; then
         fail "expected $nestingDepth, got '${#result}' (from '$result')"
@@ -78,6 +78,33 @@ test_intToSuperScript_ShouldHandleAll() {
     done
 
     expected='¹²³⁴⁵⁶⁷⁸'
+    if [[ $result != $expected ]]; then
+        fail "expected '$expected', got '$result'"
+    fi
+}
+
+test_hasGitChanges() {
+    result=$(getGitChangeIndicator)
+
+    expected="*"
+    if [[ $result != $expected ]]; then
+        fail "expected '$expected', got '$result'"
+    fi
+}
+
+test_getGitBranch() {
+    result=$(getGitBranchName)
+
+    expected='master'
+    if [[ $result != $expected ]]; then
+        fail "expected '$expected', got '$result'"
+    fi
+}
+
+test_getPrettyGitState() {
+    result=$(getPrettyGitState)
+
+    expected='(*master)'
     if [[ $result != $expected ]]; then
         fail "expected '$expected', got '$result'"
     fi
