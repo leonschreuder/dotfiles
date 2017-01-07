@@ -30,15 +30,16 @@ test_jobCountAsString_ShouldCountWhenExistant() {
 test_getNestingDepth() {
     expectedDepth=$((LC_NESTING_DEPTH + 1))
 
-    result=$( getNestingDepth )
+    # result=$( resolveNestingDepth )
+    resolveNestingDepth
 
-    if [[ $result != $expectedDepth ]]; then
-        fail "expected $expectedDepth, got '$result'"
+    if [[ $LC_NESTING_DEPTH != $expectedDepth ]]; then
+        fail "expected $expectedDepth, got '$LC_NESTING_DEPTH'"
     fi
 }
 
 test_getNestingDepthIndicator() {
-    nestingDepth=$(getNestingDepth)
+    nestingDepth=$((LC_NESTING_DEPTH + 1))
 
     result=$( getNestingDepthIndicator )
 

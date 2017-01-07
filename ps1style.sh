@@ -23,31 +23,35 @@ PRE_CHAR='❱'
 
 getNestingDepthIndicator() {
     result=''
-    for ((i=0; i<$(getNestingDepth); i++)); do
+    resolveNestingDepth
+    for ((i=0; i<$LC_NESTING_DEPTH; i++)); do
         result=$result$PRE_CHAR
     done
     echo $result
 }
 
-getNestingDepth() {
-    if [[ ! -n "${LC_NESTING_DEPTH}" ]]; then
+resolveNestingDepth() {
+    if [[ ! -n $LC_NESTING_DEPTH ]]; then
         export LC_NESTING_DEPTH=1
     else
         export LC_NESTING_DEPTH=$(( 1 + $LC_NESTING_DEPTH ))
     fi
-    echo $LC_NESTING_DEPTH
+    # echo $LC_NESTING_DEPTH
 }
 
 getPrettyTmuxSessionCount() {
-    echo $(intToSubScript $(getTmuxSessionCount))
-}
-
-intToSubScript() {
-    echo -e "\\u208$1"
+    count=$(getTmuxSessionCount)
+    if [[ count -gt 0 ]]; then
+        echo $(intToSubScript $count)
+    fi
 }
 
 getTmuxSessionCount() {
     echo $(tmux ls 2> /dev/null | wc -l | bc)
+}
+
+intToSubScript() {
+    echo -e "\\u208$1"
 }
 
 
