@@ -60,7 +60,8 @@ callIfExists() {
 }
 
 fail() {
-    echo FAIL: $1
+    echo "FAIL: ${FUNCNAME[1]} >"
+    echo "   $1"
     exit 1
 }
 
