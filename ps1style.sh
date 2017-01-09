@@ -61,22 +61,41 @@ intToSubScript() {
 getPrettyJobCount() {
     jobCount=$( getJobCount )
     if [ $jobCount -gt 0 ]; then
-        # echo " ⁽$(intToSuperScript $jobCount)⁾"
-        echo " $jobCount" 
+        echo " ⁽$(intToSuperScript $jobCount)⁾"
+        # echo " $jobCount" 
     else
         echo ''
     fi
 }
 
 intToSuperScript() {
-    #Unicode is sort of a mess here
-    if [ $1 == 1 ]; then
-        echo -e "\\u00B9"
-    elif [ $1 -gt 1 -a $1 -lt 4 ]; then
-        echo -e "\\u00B$1"
-    else
-        echo -e "\\u207$1"
-    fi
+    #Unicode is sort of a mess also cross platform sucks, so it is hard-coded it here
+    case $1 in
+        "1")
+            echo '¹'
+            ;;
+        "2")
+            echo '²'
+            ;;
+        "3")
+            echo '³'
+            ;;
+        "4")
+            echo '⁴'
+            ;;
+        "5")
+            echo '⁵'
+            ;;
+        "6")
+            echo '⁶'
+            ;;
+        "7")
+            echo '⁷'
+            ;;
+        "8")
+            echo '⁸'
+    esac
+    echo
 }
 
 getJobCount() {
