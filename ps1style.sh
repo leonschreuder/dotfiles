@@ -61,9 +61,8 @@ intToSubScript() {
 getPrettyJobCount() {
     jobCount=$( getJobCount )
     if [ $jobCount -gt 0 ]; then
-        echo " ⁽$(intToSuperScript $jobCount)⁾"
-        # echo "$(intToSuperScript $jobCount)"
-        # echo " $jobCount" 
+        # echo " ⁽$(intToSuperScript $jobCount)⁾"
+        echo " $jobCount" 
     else
         echo ''
     fi
@@ -101,8 +100,10 @@ getGitBranchName() {
 
 getGitChangeIndicator() {
     `git diff --quiet --ignore-submodules HEAD 2>/dev/null`
-    if [ $? ]; then
+    if [ $? != 0 ]; then
         echo "*"
+    else
+        echo ''
     fi
 }
 
