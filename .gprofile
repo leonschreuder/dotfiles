@@ -87,6 +87,7 @@ fi
 #======================================================================
 
 
+
 SCRIPT_PATH="${BASH_SOURCE[0]}";
 while([ -h "${SCRIPT_PATH}" ]) do 
     SCRIPT_PATH="$(readlink "`basename "${SCRIPT_PATH}"`")"; 
@@ -94,7 +95,10 @@ done
 SCRIPT_DIR=$(dirname $SCRIPT_PATH)
 
 
-# load aditional scripts
 
+eval `dircolors $SCRIPT_DIR/dircolors.256dark`
+
+
+# load aditional scripts
 source $SCRIPT_DIR/ps1style.sh
 
