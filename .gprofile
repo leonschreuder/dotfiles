@@ -13,25 +13,21 @@
 
 
 
-# To set the correct collor scheme in tmux
-export EDITOR=vim
+# SETUP
+#========================================
+
+# Locates the dotfiles directory
+SCRIPT_PATH="${BASH_SOURCE[0]}";
+while([ -h "${SCRIPT_PATH}" ]) do 
+    SCRIPT_PATH="$(readlink "`basename "${SCRIPT_PATH}"`")"; 
+done
+SCRIPT_DIR=$(dirname $SCRIPT_PATH)
+
+
+# Note: Resolving program paths (including homebrew) need to be done before referencing them
+
 export PATH=$HOME/bin:$PATH
-export TERM=screen-256color-bce
 
-
-# Local settings
-#----------------------------------------
-if [ -s ~/.lprofile ]; then
-    source ~/.lprofile
-else
-    echo "No local settings file '.lprofile' found."
-fi
-
-
-export HISTTIMEFORMAT='%F %T '
-
-
-# Note: Homebrew stuff needs to go first, otherwise the programs are not in the PATH
 
 # Homebrew
 #----------------------------------------
@@ -54,6 +50,27 @@ if [ -x $HOME/.linuxbrew/bin/brew ]; then
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
 fi
 
+
+# MAIN
+#========================================
+
+export TERM=screen-256color-bce
+export HISTTIMEFORMAT='%F %T '
+
+if hash nvim 2>/dev/null; then
+    export EDITOR=nvim
+else
+    export EDITOR=vim
+fi
+
+# Load Local settings
+#----------------------------------------
+if [ -s ~/.lprofile ]; then
+    source ~/.lprofile
+else
+    echo "No local settings file '.lprofile' found."
+fi
+
 # Go
 #----------------------------------------
 if hash go 2>/dev/null; then
@@ -71,34 +88,19 @@ if hash p4 2>/dev/null; then
     fi
 fi
 
-# Gradle
-#----------------------------------------
-# if hash gradle 2>/dev/null; then
-#     export GRADLE_HOME=$BREW_HOME/Cellar/gradle/
-# fi
-
 # Par
 #----------------------------------------
 if hash par 2>/dev/null; then
     export PARINIT='rTbgqR B=.,?_A_a P=_s Q=>|}'
 fi
 
-# Special Functionality
-#======================================================================
-
-
-
-SCRIPT_PATH="${BASH_SOURCE[0]}";
-while([ -h "${SCRIPT_PATH}" ]) do 
-    SCRIPT_PATH="$(readlink "`basename "${SCRIPT_PATH}"`")"; 
-done
-SCRIPT_DIR=$(dirname $SCRIPT_PATH)
-
-
-
-eval `dircolors $SCRIPT_DIR/dircolors.256dark`
-
+# colors for `ls`
+#----------------------------------------
+if hash dircolors 2>/dev/null; then
+    eval `dircolors $SCRIPT_DIR/dircolors.256dark`
+fi
 
 # load aditional scripts
+#======================================================================
 source $SCRIPT_DIR/ps1style.sh
 
