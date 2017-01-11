@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 
+#
 # Global-profile file. This is a completely customised settings file that only
 # has custom, system independent, settings in it. First symlink it from home:
 #   $ ln -s /path/to/dotfiles/.lbashrc
@@ -18,8 +18,8 @@
 
 # Locates the dotfiles directory
 SCRIPT_PATH="${BASH_SOURCE[0]}";
-while([ -h "${SCRIPT_PATH}" ]) do 
-    SCRIPT_PATH="$(readlink "`basename "${SCRIPT_PATH}"`")"; 
+while([ -h "$SCRIPT_PATH" ]) do
+    SCRIPT_PATH="$(readlink "$SCRIPT_PATH")"
 done
 SCRIPT_DIR=$(dirname $SCRIPT_PATH)
 
@@ -41,12 +41,12 @@ fi
 if [ -x $HOME/.linuxbrew/bin/brew ]; then
     export BREW_HOME="$HOME/.linuxbrew"
 
-	export PATH="$BREW_HOME/bin:$BREW_HOME/sbin:$PATH"
-	export MANPATH="$BREW_HOME/share/man:$MANPATH"
-	export INFOPATH="$BREW_HOME/share/info:$INFOPATH"
+    export PATH="$BREW_HOME/bin:$BREW_HOME/sbin:$PATH"
+    export MANPATH="$BREW_HOME/share/man:$MANPATH"
+    export INFOPATH="$BREW_HOME/share/info:$INFOPATH"
 
     export PKG_CONFIG_PATH=$BREW_HOME/lib/pkgconfig:$BREW_HOME/share/pkgconfig:$BREW_HOME/Library/ENV/pkgconfig/0
-    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig   
+    export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
 fi
 
@@ -74,8 +74,8 @@ fi
 # Go
 #----------------------------------------
 if hash go 2>/dev/null; then
-	export GOPATH=$HOME/repos/go
-	export PATH=$PATH:$GOPATH/bin
+    export GOPATH=$HOME/repos/go
+    export PATH=$PATH:$GOPATH/bin
 fi
 
 # P4
