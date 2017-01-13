@@ -23,20 +23,10 @@ PRE_CHAR='❱'
 
 getNestingDepthIndicator() {
     result=''
-    resolveNestingDepth
     for ((i=0; i<$LC_NESTING_DEPTH; i++)); do
         result=$result$PRE_CHAR
     done
     echo $result
-}
-
-resolveNestingDepth() {
-    if [[ ! -n $LC_NESTING_DEPTH ]]; then
-        export LC_NESTING_DEPTH=1
-    else
-        export LC_NESTING_DEPTH=$(( 1 + $LC_NESTING_DEPTH ))
-    fi
-    # echo $LC_NESTING_DEPTH
 }
 
 getPrettyTmuxSessionCount() {

@@ -23,6 +23,13 @@ while([ -h "$SCRIPT_PATH" ]) do
 done
 SCRIPT_DIR=$(dirname $SCRIPT_PATH)
 
+# track the nesting depth (increased when using e.g. tmux or sudo) for status line (no export in sourced scripts)
+if [[ ! -n $LC_NESTING_DEPTH ]]; then
+    export LC_NESTING_DEPTH=1
+else
+    export LC_NESTING_DEPTH=$(( 1 + $LC_NESTING_DEPTH ))
+fi
+
 
 # Note: Resolving program paths (including homebrew) need to be done before referencing them
 
