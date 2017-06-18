@@ -39,8 +39,9 @@ export PATH=$HOME/bin:$PATH
 # Homebrew
 #----------------------------------------
 if [ -x /usr/local/bin/brew ]; then
-    export BREW_HOME="/usr/local/"
+    export BREW_HOME="/usr/local"
     export PATH="/usr/local/bin:$PATH"  #Put brew/bin in front of standard bin in PATH
+    [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 fi
 
 # Linuxbrew
@@ -78,11 +79,12 @@ else
     echo "No local settings file '.lprofile' found."
 fi
 
-# Go
+# Golang
 #----------------------------------------
 if hash go 2>/dev/null; then
+    export GOROOT=$BREW_HOME/opt/go/libexec
     export GOPATH=$HOME/repos/go
-    export PATH=$PATH:$GOPATH/bin
+    export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 fi
 
 # P4
