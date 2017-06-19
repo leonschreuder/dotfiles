@@ -52,6 +52,7 @@ if [ -x $HOME/.linuxbrew/bin/brew ]; then
     export PATH="$BREW_HOME/bin:$BREW_HOME/sbin:$PATH"
     export MANPATH="$BREW_HOME/share/man:$MANPATH"
     export INFOPATH="$BREW_HOME/share/info:$INFOPATH"
+    export XDG_DATA_DIRS="/home/lemo7242/.linuxbrew/share:$XDG_DATA_DIRS"
 
     export PKG_CONFIG_PATH=$BREW_HOME/lib/pkgconfig:$BREW_HOME/share/pkgconfig:$BREW_HOME/Library/ENV/pkgconfig/0
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
