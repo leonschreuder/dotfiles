@@ -108,8 +108,7 @@ getGitBranchName() {
 }
 
 getGitChangeIndicator() {
-    `git diff --quiet --ignore-submodules HEAD 2>/dev/null`
-    if [ $? != 0 ]; then
+    if [[ $(git status --porcelain) ]]; then
         echo "*"
     else
         echo ''
