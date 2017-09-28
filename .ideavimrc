@@ -19,3 +19,16 @@ map [w :action PreviousTab<CR>
 set visualbell
 set noerrorbells
 set surround
+
+noremap <leader>;f :action ReformatCode
+noremap <leader>n :action ActivateProjectToolWindow<CR>
+noremap <leader>e :action ActivateRunToolWindow<CR>
+
+noremap <leader>wh :action HideAllWindows<CR>
+
+
+"   :actionlist [pattern]
+"       Find IDE actions by name pattern
+"   :action {name}
+"       Execute an action named NAME
+
