@@ -68,6 +68,7 @@ export HISTTIMEFORMAT='%F %T '
 
 if hash nvim 2>/dev/null; then
     export EDITOR=nvim
+    alias vim='nvim'
 else
     export EDITOR=vim
 fi
