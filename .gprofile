@@ -94,8 +94,6 @@ fi
 if hash p4 2>/dev/null; then
     if [ -s ~/.p4profile ]; then
         source ~/.p4profile
-    else
-        echo "p4 settings file not found"
     fi
 fi
 
