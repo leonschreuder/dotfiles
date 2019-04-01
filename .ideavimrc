@@ -10,6 +10,7 @@ map <leader>l <C-W>l
 map <leader>ul :action Run<CR>
 map <leader>t :action SearchEverywhere<CR>
 map ,t :action GotoTest<CR>
+map ,i :action GotoImplementation<CR>
 map ]w :action NextTab<CR>
 map [w :action PreviousTab<CR>
 
@@ -20,7 +21,7 @@ set visualbell
 set noerrorbells
 set surround
 
-noremap <leader>;f :action ReformatCode
+noremap <leader>;f :action ReformatCode<CR>
 noremap <leader>n :action ActivateProjectToolWindow<CR>
 noremap <leader>e :action ActivateRunToolWindow<CR>
 

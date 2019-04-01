@@ -1,29 +1,37 @@
 # This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
-#	name = Moll Leon
-#	email = lemo7242@eso10695.eso.local
-[user]
-  name = lemo7242
-  email = leon.moll@esolutions.de
+	name = lemo7242
+	email = leon.moll@esolutions.de
 [push]
-  default = current
+	default = current
 [pull]
-  rebase = true
+	rebase = true
 [alias]
   lol = log --decorate --oneline
+  lob = log --decorate --oneline --decorate-refs-exclude=*tag* --graph
   lola = log --decorate --oneline --graph --all
-  lolu = log  --all --graph --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(auto)%h %cd %C(blue)%ae%Creset %C(auto)%D%Creset %s\"
+	lolu = log  --graph --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(auto)%h %cd %C(blue)%ae%Creset %C(auto)%D%Creset %s\"
   st = status -s
   hilfe = "!echo 'Possible eso commands: git update (update upstream and rebase), git new (create new branch), git save (add and commit), git upload (rebase and push), git delete (delete everything) and git destory (force delete everything)'"
-  update  = "!f(){ echo "$ $@";"$@";}; if [ x`git symbolic-ref -q HEAD` = xrefs/heads/master ]; then echo "Can\\'t run update from master. Just use \\'git pull\\'"; else f "git fetch --prune" && f "git merge --ff-only master origin/master" && f "git rebase master"; fi"
-  new     = "!f(){ echo "$ $@";"$@";}; f "git fetch --prune" && f "git checkout -b $1 origin/master"; :"
+  ; update  = "!f(){ echo "$ $@";"$@";}; if [ x`git symbolic-ref -q HEAD` = xrefs/heads/master ]; then echo "Can\\'t run update from master. Just use \\'git pull\\'"; else f "git fetch --prune" && f "git merge --ff-only master origin/master" && f "git rebase master"; fi"
+  ; new     = "!f(){ echo "$ $@";"$@";}; f "git fetch --prune" && f "git checkout -b $1 origin/master"; :"
   save    = "!f(){ echo "$ $@";"$@";}; f "git add ." && f "git commit""
   upload  = "!f(){ echo "$ $@";"$@";}; f "git fetch --prune" && f "git rebase -i origin/master" && f "git push origin HEAD""
   delete  = "!f(){ echo "$ $@";"$@";}; echo "Deleting branch \\'$1\\' locally and from the remote..." && f "git branch -d $1" && f "git push origin :$1" || echo "...or use the alias \\'git destroy $1\\' "; :"
   destroy = "!f(){ echo "$ $@";"$@";}; echo "Deleting branch \\'$1\\' locally and from the remote..." && f "git branch -D $1" && f "git push origin :$1"; :"
-[credential]
-  helper = cache --timeout=604800
+
+  abandon = "! git branch -d $(git rev-parse --abbrev-ref @{-1})"
 [url "https://bitbucket.eso.local/scm/mib3-rsi/"]
   insteadOf = https://group-cip.audi.de/stash/scm/rsi/
   insteadOf = https://group-cip.audi.de/stash/scm/rsitools/
+[core]
+	autocrlf = input
+[http "https://bitbucket.eso.local"]
+	sslCAInfo = /home/lemo7242/.esocert
+[credential]
+	helper = cache --timeout=604800
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
