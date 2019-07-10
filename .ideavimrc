@@ -13,6 +13,7 @@ map ,t :action GotoTest<CR>
 map ,i :action GotoImplementation<CR>
 map ]w :action NextTab<CR>
 map [w :action PreviousTab<CR>
+noremap ,d :action QuickJavaDoc<CR>
 
 " not implemented yet. See https://github.com/JetBrains/ideavim/pull/86
 " map gc :action CommentByLineComment<CR>
