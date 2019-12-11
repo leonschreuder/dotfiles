@@ -1,21 +1,23 @@
 #!/bin/bash
 
-SCRIPT_PATH="$(readlink -e "${BASH_SOURCE[0]}")";
-SCRIPT_DIR=$(dirname $SCRIPT_PATH)
-
+SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # symlinks from here
 homeLinks=".gitconfig .gprofile .ideavimrc .inputrc .tmux.conf"
 for f in $homeLinks; do
   echo "creating symlink in home for $f"
-  ln -fs $SCRIPT_DIR/$f $HOME/$f
+  ln -fs $SCRIPT_PATH/$f $HOME/$f
 done
 
 
 # load ~/.gprofile
 rcFile="$HOME/.bashrc"
-echo "add loading of ~/.gprofile to $rcFile"
-echo '[[ -s ~/.gprofile ]] && source ~/.gprofile' >> $rcFile
+if ! grep -q ".gprofile" $rcFile; then
+  echo "add loading of ~/.gprofile to $rcFile"
+  echo '[[ -s ~/.gprofile ]] && source ~/.gprofile' >> $rcFile
+else
+  echo "already loading .gprofile from $rcFile"
+fi
 
 
 read -p "Install solarized for gnome-terminal? " -n 1 -r

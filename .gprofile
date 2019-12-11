@@ -112,4 +112,3 @@ fi
 # load aditional scripts
 #======================================================================
 source $SCRIPT_DIR/ps1style.sh
-

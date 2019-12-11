@@ -5,3 +5,8 @@ nmap [w :xccmd selectPreviousTab<CR>
 nmap <space>n :xccmd changeToStructureNavigator<CR>
 nmap <space>wh :xccmd toggleNavigatorsVisibility<CR>
 nmap <space>e :xccmd toggleDebuggerVisibility<CR>
+
+nmap <space>h <C-w>h
+nmap <space>j <C-w>j
+nmap <space>k <C-w>k
+nmap <space>l <C-w>l
