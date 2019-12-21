@@ -1,43 +1,45 @@
+TEST_DIR="$(pwd)/tmp_test"
 
 setup() {
-    source ./ps1style.sh
+  rm -rf "$TEST_DIR"
+  mkdir -p "$TEST_DIR"
+  source ./ps1style.sh
+}
+
+teardown() {
+  rm -rf "$TEST_DIR"
 }
 
 test_jobCountAsString_ShouldReturnEmptyStringPerDefault() {
-    source .gprofile
+  source .gprofile
 
-    result=$( getJobCount )
+  result=$( getJobCount )
 
-    if [[ $result != 0 ]]; then
-        fail "expected 0, got $result"
-    fi
+  assertEquals 0 "$result"
 }
 
 test_jobCountAsString_ShouldCountWhenExistant() {
-    # start process squelching the output
-    (ping localhost -c 1  > /dev/null ) &
+  # start process squelching the output
+  (ping localhost -c 1  > /dev/null ) &
 
-    result=$( getJobCount )
+  result=$( getJobCount )
 
-    killTillDead $(jobs -p)
+  killTillDead $(jobs -p)
 
-    expected=1
-    if [[ $result != $expected ]]; then
-        fail "expected '$expected', got '$result'"
-    fi
+  assertEquals 1 "$result"
 }
 
 test_getNestingDepthIndicator() {
-    nestingDepth=$((LC_NESTING_DEPTH))
+  nestingDepth=$((LC_NESTING_DEPTH))
 
-    result=$( getNestingDepthIndicator )
+  result=$( getNestingDepthIndicator )
 
-    if [[ ${#result} != $nestingDepth ]]; then
-        fail "expected $nestingDepth, got '${#result}' (from '$result')"
-    fi
-    if [[ $result != "$PRE_CHAR"* ]]; then
-        fail "expected '$result' to start with got '$PRE_CHAR'"
-    fi
+  if [[ ${#result} != $nestingDepth ]]; then
+    fail "expected $nestingDepth, got '${#result}' (from '$result')"
+  fi
+  if [[ $result != "$PRE_CHAR"* ]]; then
+    fail "expected '$result' to start with got '$PRE_CHAR'"
+  fi
 }
 
 # @Ignore (session count dependent)
@@ -50,61 +52,69 @@ test_getNestingDepthIndicator() {
 # }
 
 test_intToSubScript_ShouldHandleAll() {
-    result=''
-    for i in {1..8}; do
-        result=$result$(intToSubScript $i)
-    done
+  result=''
+  for i in {1..8}; do
+    result=$result$(intToSubScript $i)
+  done
 
-    expected='₁₂₃₄₅₆₇₈'
-    if [[ $result != $expected ]]; then
-        fail "expected '$expected', got '$result'"
-    fi
+  assertEquals '₁₂₃₄₅₆₇₈' "$result"
 }
 
 test_intToSuperScript_ShouldHandleAll() {
-    result=''
-    for i in {1..8}; do
-        result=$result$(intToSuperScript $i)
-    done
+  result=''
+  for i in {1..8}; do
+    result=$result$(intToSuperScript $i)
+  done
 
-    expected='¹²³⁴⁵⁶⁷⁸'
-    if [[ $result != $expected ]]; then
-        fail "expected '$expected', got '$result'"
-    fi
+  assertEquals '¹²³⁴⁵⁶⁷⁸' "$result"
 }
 
-test_hasGitChanges() {
-    result=$(getGitChangeIndicator)
+test_should_indicate_changes() {
+  cd $TEST_DIR
+  initEmptyGitRepo
 
-    expected="*"
-    if [[ $result != $expected ]]; then
-        fail "expected '$expected', got '$result'"
-    fi
-}
+  # no change no indicator
+  # (master) -> no changes
+  assertEquals "" "$(getGitStatusIndicator)"
 
-test_getGitBranch() {
-    result=$(getGitBranchName)
+  # (+master) -> only changed or added files
+  echo "a" > file.txt
+  assertEquals "+" "$(getGitStatusIndicator)"
 
-    expected='master'
-    if [[ $result != $expected ]]; then
-        fail "expected '$expected', got '$result'"
-    fi
+  # (-master) -> only files alrady added to the index
+  git add .
+  assertEquals "-" "$(getGitStatusIndicator)"
+
+  # (*master) -> changed and new files
+  echo "b" >> file.txt
+  touch newFile.txt
+  assertEquals "*" "$(getGitStatusIndicator)"
 }
 
 test_getPrettyGitState() {
-    result=$(getPrettyGitState)
+  cd $TEST_DIR
+  initEmptyGitRepo
+  echo "a" > file.txt
 
-    expected='(*master)'
-    if [[ $result != $expected ]]; then
-        fail "expected '$expected', got '$result'"
-    fi
+  result=$(getPrettyGitState)
+
+  assertEquals '(+master)' "$result"
 }
 
 # HELPERS
 #--------------------------------------------------------------------------------
 
 killTillDead() {
-    echo $1 &> /dev/null | xargs kill -9
-    # this takes a little bit, so wait to not mess up the other tests.
-    wait $1
+  echo $1 &> /dev/null | xargs kill -9
+  # this takes a little bit, so wait to not mess up the other tests.
+  wait $1
+}
+
+initEmptyGitRepo() {
+  ( cd $TEST_DIR
+    git init -q
+    touch file.txt
+    git add .
+    git commit -q -m "init"
+  )
 }

@@ -112,3 +112,5 @@ fi
 # load aditional scripts
 #======================================================================
 source $SCRIPT_DIR/ps1style.sh
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

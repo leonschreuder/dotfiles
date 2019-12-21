@@ -4,13 +4,13 @@
 #======================================================================
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
 
-BLACK="\[$(tput setaf 0)\]"
-RED="\[$(tput setaf 1)\]"
-GREEN="\[$(tput setaf 2)\]"
-YELLOW="\[$(tput setaf 3)\]"
+# BLACK="\[$(tput setaf 0)\]"
+# RED="\[$(tput setaf 1)\]"
+# GREEN="\[$(tput setaf 2)\]"
+# YELLOW="\[$(tput setaf 3)\]"
 BLUE="\[$(tput setaf 4)\]"
-PINK="\[$(tput setaf 5)\]"
-CYAN="\[$(tput setaf 6)\]"
+# PINK="\[$(tput setaf 5)\]"
+# CYAN="\[$(tput setaf 6)\]"
 WHITE="\[$(tput setaf 7)\]"
 NO_COLLOR="\[$(tput sgr0)\]"
 
@@ -22,74 +22,60 @@ PRE_CHAR='❱'
 #--------------------------------------------------------------------------------
 
 getNestingDepthIndicator() {
-    result=''
-    for ((i=0; i<$LC_NESTING_DEPTH; i++)); do
-        result=$result$PRE_CHAR
-    done
-    echo $result
+  result=''
+  for ((i=0; i<$LC_NESTING_DEPTH; i++)); do
+    result=$result$PRE_CHAR
+  done
+  echo $result
 }
 
 getPrettyTmuxSessionCount() {
-    count=$(getTmuxSessionCount)
-    if [[ count -gt 0 ]]; then
-        echo $(intToSubScript $count)
-    fi
+  count=$(getTmuxSessionCount)
+  if [[ count -gt 0 ]]; then
+    echo $(intToSubScript $count)
+  fi
 }
 
 getTmuxSessionCount() {
-    echo $(tmux ls 2> /dev/null | wc -l | bc)
+  echo $(tmux ls 2> /dev/null | wc -l | bc)
 }
 
 intToSubScript() {
-    echo -e "\\u208$1"
+  echo -e "\\u208$1"
 }
 
+intToSuperScript() {
+  # Unicode is an inconsistent mess, also cross platform sucks for superscript,
+  # so I've just hard-coded the chars and hope git or the browser will take
+  # care of the encoding for me.
+  case $1 in
+    "1") echo '¹' ;;
+    "2") echo '²' ;;
+    "3") echo '³' ;;
+    "4") echo '⁴' ;;
+    "5") echo '⁵' ;;
+    "6") echo '⁶' ;;
+    "7") echo '⁷' ;;
+    "8") echo '⁸'
+  esac
+  echo
+}
 
 # Job state
 #--------------------------------------------------------------------------------
 
 getPrettyJobCount() {
-    jobCount=$( getJobCount )
-    if [ $jobCount -gt 0 ]; then
-        echo " ⁽$(intToSuperScript $jobCount)⁾"
-        # echo " $jobCount" 
-    else
-        echo ''
-    fi
-}
-
-intToSuperScript() {
-    #Unicode is sort of a mess also cross platform sucks, so it is hard-coded it here
-    case $1 in
-        "1")
-            echo '¹'
-            ;;
-        "2")
-            echo '²'
-            ;;
-        "3")
-            echo '³'
-            ;;
-        "4")
-            echo '⁴'
-            ;;
-        "5")
-            echo '⁵'
-            ;;
-        "6")
-            echo '⁶'
-            ;;
-        "7")
-            echo '⁷'
-            ;;
-        "8")
-            echo '⁸'
-    esac
-    echo
+  jobCount=$( getJobCount )
+  if [ $jobCount -gt 0 ]; then
+    echo " ⁽$(intToSuperScript $jobCount)⁾"
+    # echo " $jobCount" 
+  else
+    echo ''
+  fi
 }
 
 getJobCount() {
-    echo $( jobs | wc -l | bc )
+  echo $( jobs | wc -l | bc )
 }
 
 # GIT state
@@ -97,22 +83,26 @@ getJobCount() {
 
 # prints '(*master)' when on master. The '*' is added when there are local changes
 getPrettyGitState() {
-    gitBranch=$(getGitBranchName)
-    if [[ -n $gitBranch ]]; then
-        echo "($(getGitChangeIndicator)$gitBranch)"
-    fi
+  gitBranch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+  [[ "$gitBranch" == "" ]] && return # no git repo
+
+  echo "($(getGitStatusIndicator)$gitBranch)"
 }
 
-getGitBranchName() {
-    echo `git rev-parse --abbrev-ref HEAD 2> /dev/null`
-}
-
-getGitChangeIndicator() {
-    if [[ $(git status --porcelain) ]]; then
-        echo "*"
-    else
-        echo ''
+getGitStatusIndicator() {
+  status="$(git status --porcelain=2)"
+  [[ "$status" == "" ]] && return
+  while read -r line; do
+    if [[ "$line" == [12]\ [A-Z].* ]];then # file changes in index only
+      [ "$indicator" == "" ] && indicator="-"
+    elif [[ "$line" == [12]\ ?[A-Z]* ]];then # some
+      [ "$indicator" != "*" ] && indicator="+"
+    elif [[ "$line" == \?\ * ]];then
+      indicator="*"
+      break
     fi
+  done <<< "$status"
+  echo -n "$indicator"
 }
 
 
