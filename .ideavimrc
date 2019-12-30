@@ -14,6 +14,9 @@ map ,i :action GotoImplementation<CR>
 map ]w :action NextTab<CR>
 map [w :action PreviousTab<CR>
 noremap ,d :action QuickJavaDoc<CR>
+inoremap <C-,>d <C-o>:action QuickJavaDoc<CR>
+noremap ,p :action ParameterInfo<CR>
+inoremap <C-,>p <C-o>:action ParameterInfo<CR>
 
 " not implemented yet. See https://github.com/JetBrains/ideavim/pull/86
 " map gc :action CommentByLineComment<CR>
@@ -25,6 +28,7 @@ set surround
 noremap <leader>;f :action ReformatCode<CR>
 noremap <leader>n :action ActivateProjectToolWindow<CR>
 noremap <leader>e :action ActivateRunToolWindow<CR>
+
 
 noremap <leader>wh :action HideAllWindows<CR>
 
