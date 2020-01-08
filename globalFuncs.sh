@@ -1,19 +1,23 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 
 # credit https://superuser.com/a/611582/362137
-function countdown(){
-   date1=$((`date +%s` + $1)); 
-   while [ "$date1" -ge `date +%s` ]; do 
-     echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
+countdown() {
+   refDate=$(($(date +%s) + $1))
+   while [ "$refDate" -ge $(date +%s) ]; do 
+     newTime="$(date -u --date @$(($refDate - $(date +%s))) +%H:%M:%S)"
+     echo -en "\ek$newTime\e\\" # update tmux console
+     echo -ne "$newTime\r"
      sleep 0.1
    done
+   echo -en "\ekbash\e\\"
 }
+
 # credit https://superuser.com/a/611582/362137
-function stopwatch(){
-  date1=`date +%s`; 
-   while true; do 
-    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
+stopwatch() {
+  refDate=$(date +%s)
+  while true; do
+    echo -ne "$(date -u --date @$(( $(date +%s) - $refDate)) +%H:%M:%S)\r"
     sleep 0.1
-   done
+  done
 }
