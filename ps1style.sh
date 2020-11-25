@@ -90,14 +90,18 @@ getPrettyGitState() {
 }
 
 getGitStatusIndicator() {
-  status="$(git status --porcelain=2)"
+  status="$(git status --porcelain)"
   [[ "$status" == "" ]] && return
-  while read -r line; do
-    if [[ "$line" == [12]\ [A-Z].* ]];then # file changes in index only
+  #  -  everything in index
+  #  +  local changes on known files
+  #  *  repo has unstaged files
+
+  while IFS='\n' read -r line; do
+    if [[ "$line" =~ ^[A-Z][[:space:]] ]];then # current change is staged
       [ "$indicator" == "" ] && indicator="-"
-    elif [[ "$line" == [12]\ ?[A-Z]* ]];then # some
+    elif [[ "$line" =~ ^.[A-Z] ]];then # current change is or has unstaged parts
       [ "$indicator" != "*" ] && indicator="+"
-    elif [[ "$line" == \?\ * ]];then
+    elif [[ "$line" =~ ^\? ]];then # current change is or has unstaged parts
       indicator="*"
       break
     fi
