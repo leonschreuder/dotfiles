@@ -42,3 +42,5 @@
 	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [diff]
   tool = nvimdiff
+[credentialCache]
+	ignoreSIGHUP = true
