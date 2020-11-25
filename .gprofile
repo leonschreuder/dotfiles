@@ -63,8 +63,8 @@ fi
 # MAIN
 #========================================
 
-export TERM=screen-256color-bce
-export HISTTIMEFORMAT='%F %T '
+# export TERM=screen-256color-bce
+# export HISTTIMEFORMAT='%F %T '
 
 if hash nvim 2>/dev/null; then
     export EDITOR=nvim
