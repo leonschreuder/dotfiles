@@ -17,6 +17,15 @@ noremap ,d :action QuickJavaDoc<CR>
 inoremap <C-,>d <C-o>:action QuickJavaDoc<CR>
 noremap ,p :action ParameterInfo<CR>
 inoremap <C-,>p <C-o>:action ParameterInfo<CR>
+noremap ,f :action FindUsages<CR>
+
+noremap <leader>rr :action RenameElement<CR>
+noremap <leader>rm :action ExtractMethod<CR>
+noremap <leader>rv :action IntroduceVariable<CR>
+noremap <leader>rs :action ChangeSignature<CR>
+noremap <leader>ri :action Inline<CR>
+noremap <leader>rg :action Generate<CR>
+
 
 " not implemented yet. See https://github.com/JetBrains/ideavim/pull/86
 " map gc :action CommentByLineComment<CR>
