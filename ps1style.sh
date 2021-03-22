@@ -37,7 +37,7 @@ getPrettyTmuxSessionCount() {
 }
 
 getTmuxSessionCount() {
-  echo $(tmux ls 2> /dev/null | wc -l | bc)
+  echo $(tmux ls 2> /dev/null | wc -l | xargs)
 }
 
 intToSubScript() {
@@ -75,7 +75,7 @@ getPrettyJobCount() {
 }
 
 getJobCount() {
-  echo $( jobs | wc -l | bc )
+  echo $( jobs | wc -l | xargs )
 }
 
 # GIT state
