@@ -77,8 +77,6 @@ fi
 #----------------------------------------
 if [ -s ~/.lprofile ]; then
     source ~/.lprofile
-else
-    echo "No local settings file '.lprofile' found."
 fi
 
 # Golang

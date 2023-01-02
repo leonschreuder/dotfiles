@@ -7,43 +7,57 @@ map <leader>j <C-W>j
 map <leader>k <C-W>k
 map <leader>l <C-W>l
 
-map <leader>ul :action Run<CR>
-map <leader>t :action SearchEverywhere<CR>
-map ,t :action GotoTest<CR>
-map ,i :action GotoImplementation<CR>
-map ]w :action NextTab<CR>
-map [w :action PreviousTab<CR>
-noremap ,d :action QuickJavaDoc<CR>
-inoremap <C-,>d <C-o>:action QuickJavaDoc<CR>
-noremap ,p :action ParameterInfo<CR>
-inoremap <C-,>p <C-o>:action ParameterInfo<CR>
-noremap ,f :action FindUsages<CR>
+map <leader>ul <Action>(Run)
+map <leader>ub <Action>(MakeGradleProject)
 
-noremap <leader>rr :action RenameElement<CR>
-noremap <leader>rm :action ExtractMethod<CR>
-noremap <leader>rv :action IntroduceVariable<CR>
-noremap <leader>rs :action ChangeSignature<CR>
-noremap <leader>ri :action Inline<CR>
-noremap <leader>rg :action Generate<CR>
+map <leader>t <Action>(SearchEverywhere)
+map gt <Action>(GotoTest)
+map gi <Action>(GotoImplementation)
+map ]w <Action>(NextTab)
+map [w <Action>(PreviousTab)
+map ,d <Action>(QuickJavaDoc)
+imap <C-,>d <C-o><Action>(QuickJavaDoc)
+map ,p <Action>(ParameterInfo)
+imap <C-,>p <C-o><Action>(ParameterInfo)
+map ,f <Action>(FindUsages)
 
+map ,c <Action>(ShowIntentionActions)
+map ,/ <Action>(ShowErrorDescription)
+
+
+map <leader>rr <Action>(RenameElement)
+map <leader>rm <Action>(ExtractMethod)
+map <leader>rf <Action>(ExtractFunction)
+map <leader>rv <Action>(IntroduceVariable)
+map <leader>rc <Action>(ChangeSignature)
+map <leader>ri <Action>(Inline)
+map <leader>rg <Action>(Generate)
+
+noremap <C-j> 3<C-e>
+noremap <C-k> 3<C-y>
+noremap <C-h> 10zh
+noremap <C-l> 10zl
 
 " not implemented yet. See https://github.com/JetBrains/ideavim/pull/86
-" map gc :action CommentByLineComment<CR>
+" map gc <Action>(CommentByLineComment)
 
 set visualbell
 set noerrorbells
 set surround
+set commentary
 
-noremap <leader>;f :action ReformatCode<CR>
-noremap <leader>n :action ActivateProjectToolWindow<CR>
-noremap <leader>e :action ActivateRunToolWindow<CR>
+map <leader>;f <Action>(ReformatCode)
+map <leader>n <Action>(ActivateProjectToolWindow)
+map <leader>e <Action>(ActivateRunToolWindow)
 
 
-noremap <leader>wh :action HideAllWindows<CR>
+map <leader>wh <Action>(HideAllWindows)
 
 
 "   :actionlist [pattern]
 "       Find IDE actions by name pattern
 "   :action {name}
-"       Execute an action named NAME
+"       Execute action in intellij
+"   <Action>({name})
+"       Use in mapping
 

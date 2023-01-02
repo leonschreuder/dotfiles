@@ -1,27 +1,25 @@
 # This is Git's per-user configuration file.
 [user]
 	name = lemo7242
-	email = leon.moll@esolutions.de
+	email = Leon.Schreuder@esolutions.de
 [push]
 	default = current
 [pull]
 	rebase = true
 [alias]
   lol = log --decorate --oneline
-  lob = log --decorate --oneline --decorate-refs-exclude='/refs/tags/*'
   lola = log --decorate --oneline --graph --all
-  loba = log --decorate --oneline --graph --decorate-refs-exclude='refs/tags/*' --all
+	loli = log --decorate --oneline --graph --all --decorate-refs='refs/heads/*'
 	lolu = log  --graph --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(auto)%h %cd %C(blue)%ae%Creset %C(auto)%D%Creset %s\"
-	lobu = log  --graph --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(auto)%h %cd %C(blue)%ae%Creset %C(auto)%D%Creset %s\" --decorate-refs-exclude='/refs/tags/*'
   st = status -s
-  hilfe = "!echo 'Possible eso commands: git update (update upstream and rebase), git new (create new branch), git save (add and commit), git upload (rebase and push), git delete (delete everything) and git destory (force delete everything)'"
-  save    = "!f(){ echo "$ $@";"$@";}; f "git add ." && f "git commit""
   upload  = "!f(){ echo "$ $@";"$@";}; f "git fetch --prune" && f "git rebase -i origin/master" && f "git push origin HEAD""
-  delete  = "!f(){ echo "$ $@";"$@";}; echo "Deleting branch \\'$1\\' locally and from the remote..." && f "git branch -d $1" && f "git push origin :$1" || echo "...or use the alias \\'git destroy $1\\' "; :"
-  destroy = "!f(){ echo "$ $@";"$@";}; echo "Deleting branch \\'$1\\' locally and from the remote..." && f "git branch -D $1" && f "git push origin :$1"; :"
+  bothrename  = "!f(){ echo "$ $@";"$@";}; echo "Renaming local and remote branches to \\'$1\\'." && f "git push origin --delete $(git rev-parse --abbrev-ref HEAD 2> /dev/null)" && f "git branch -m $1" && git push -u; :"
+  bothdelete  = "!f(){ echo "$ $@";"$@";}; echo "Deleting local and remote branches for \\'$1\\'." && f "git branch -d $1" && f "git push origin --delete $1" || echo "...or use the alias \\'git bothdeleteforce $1\\' "; :"
+  bothdeleteforce = "!f(){ echo "$ $@";"$@";}; echo "Deleting branch \\'$1\\' locally and from the remote..." && f "git branch -D $1" && f "git push origin :$1"; :"
   taskset = "!echo > ~/.current_task"
   taskammend = "!git commit -a --amend -m \"$(git log -1 --format=\"%s%n%n%b\")$(echo \"\\n\\nid:$(cat ~/.current_task)\")\""
   abandon = "! git branch -d $(git rev-parse --abbrev-ref @{-1})"
+  dropMerged    = "!f(){ echo "$ $@";"$@";}; f "git checkout master" && f "git pull --prune" && f "git branch -d $(git rev-parse --abbrev-ref @{-1})""
 [url "https://bitbucket.eso.local/scm/mib3-rsi/"]
   insteadOf = https://group-cip.audi.de/stash/scm/rsi/
   insteadOf = https://group-cip.audi.de/stash/scm/rsitools/
