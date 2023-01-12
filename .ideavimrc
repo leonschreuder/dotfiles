@@ -1,4 +1,9 @@
 
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'preservim/nerdtree'
+Plug 'machakann/vim-highlightedyank'
+
 let mapleader = " "
 
 map <leader>w <C-W>
@@ -12,6 +17,7 @@ map <leader>ub <Action>(MakeGradleProject)
 
 map <leader>t <Action>(SearchEverywhere)
 map gt <Action>(GotoTest)
+map gd <Action>(GotoDeclaration)
 map gi <Action>(GotoImplementation)
 map ]w <Action>(NextTab)
 map [w <Action>(PreviousTab)
@@ -22,7 +28,7 @@ imap <C-,>p <C-o><Action>(ParameterInfo)
 map ,f <Action>(FindUsages)
 
 map ,c <Action>(ShowIntentionActions)
-map ,/ <Action>(ShowErrorDescription)
+map ,e <Action>(ShowErrorDescription)
 
 
 map <leader>rr <Action>(RenameElement)
@@ -47,11 +53,14 @@ set surround
 set commentary
 
 map <leader>;f <Action>(ReformatCode)
-map <leader>n <Action>(ActivateProjectToolWindow)
 map <leader>e <Action>(ActivateRunToolWindow)
 
 
 map <leader>wh <Action>(HideAllWindows)
+
+" map <leader>n <Action>(ActivateProjectToolWindow)
+map <leader>n :NERDTreeToggle<CR>
+map <leader>N :NERDTreeFind<CR>
 
 
 "   :actionlist [pattern]
