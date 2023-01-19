@@ -3,6 +3,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'preservim/nerdtree'
 Plug 'machakann/vim-highlightedyank'
+Plug 'easymotion/vim-easymotion'
 
 let mapleader = " "
 
@@ -43,6 +44,8 @@ noremap <C-j> 3<C-e>
 noremap <C-k> 3<C-y>
 noremap <C-h> 10zh
 noremap <C-l> 10zl
+
+map <Leader> <Plug>(easymotion-prefix)
 
 " not implemented yet. See https://github.com/JetBrains/ideavim/pull/86
 " map gc <Action>(CommentByLineComment)
