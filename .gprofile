@@ -40,7 +40,8 @@ export PATH=$HOME/bin:$PATH
 #----------------------------------------
 if [ -x /usr/local/bin/brew ]; then
     export BREW_HOME="/usr/local"
-    export PATH="/usr/local/bin:$PATH"  #Put brew/bin in front of standard bin in PATH
+    export PATH="/usr/local/bin:/usr/local/sbin:$PATH"  #Put brew/bin in front of standard bin in PATH
+
     [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 fi
 

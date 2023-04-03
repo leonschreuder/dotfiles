@@ -1,7 +1,7 @@
 # This is Git's per-user configuration file.
 [user]
-	name = lemo7242
-	email = Leon.Schreuder@esolutions.de
+	name = leonschreuder
+	email = leon.schreuder@protonmail.com
 [push]
 	default = current
 [pull]
@@ -42,3 +42,5 @@
   tool = nvimdiff
 [credentialCache]
 	ignoreSIGHUP = true
+[init]
+	defaultBranch = main
