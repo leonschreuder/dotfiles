@@ -10,7 +10,7 @@
   lol = log --decorate --oneline
   lola = log --decorate --oneline --graph --all
 	loli = log --decorate --oneline --graph --all --decorate-refs='refs/heads/*'
-	lolu = log  --graph --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(auto)%h %cd %C(blue)%ae%Creset %C(auto)%D%Creset %s\"
+	lolu = log --all --graph --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(auto)%h %cd %C(blue)%ae%Creset %C(auto)%D%Creset %s\"
   st = status -s
   upload  = "!f(){ echo "$ $@";"$@";}; f "git fetch --prune" && f "git rebase -i origin/master" && f "git push origin HEAD""
   bothrename  = "!f(){ echo "$ $@";"$@";}; echo "Renaming local and remote branches to \\'$1\\'." && f "git push origin --delete $(git rev-parse --abbrev-ref HEAD 2> /dev/null)" && f "git branch -m $1" && git push -u; :"
