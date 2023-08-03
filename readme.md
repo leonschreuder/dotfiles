@@ -4,6 +4,18 @@ pretty basic, so have a look around.
 The `install.sh` script tries to setup everything like I like it for the
 current environment.
 
+## Linux setup
+
+1. Install homebrew
+2. Install tmux, git, neovim
+3. clone dotfiles (this repo) and run `./install.sh`
+4. clone and setup vim_settings (see readme)
+
+## Windows setup
+
+1. Install gitbash + add english keyboard (+ company setup scripts)
+2. clone and install.sh dotfiles (this repo)
+3. clone and setup vim_settings
 
 ## Clean vserver setup guidelines
 
@@ -28,7 +40,3 @@ Should have auto-generated .bashrc
 
 ## Next steps
 
-1. Install homebrew
-2. Install tmux, git, neovim
-3. clone and install.sh dotfiles (this repo)
-4. clone and setup vim_settings
