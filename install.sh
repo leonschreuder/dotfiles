@@ -40,6 +40,8 @@ setupWindows() {
 
 
 setupUnix() {
+  summary=()
+
   # symlinks from here
   for f in $toSymlinkUnix; do
     echo "creating symlink in home for $f"
@@ -57,6 +59,7 @@ setupUnix() {
   fi
 
   touch $HOME/.lprofile
+  summary+=("Fill $HOME/.lprofile with cusom settings like JAVA_HOME etc.")
 
 
   read -p "Install solarized for gnome-terminal? " -n 1 -r
@@ -64,17 +67,44 @@ setupUnix() {
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     tmpDir="$(mktemp -d)"
     (
-    cd $tmpDir
-    git clone https://github.com/sigurdga/gnome-terminal-colors-solarized.git solarized
-    ./solarized/install.sh
-  )
-  [[ $? -ne 0 ]] && echo "ERROR during installation. Rerun with '$tmpDir/solarized/install.sh'"
+      cd $tmpDir
+      git clone https://github.com/sigurdga/gnome-terminal-colors-solarized.git solarized
+      ./solarized/install.sh
+    )
+    if [[ $? -ne 0 ]]; then
+      echo "ERROR during installation. Repo downloaded to '$tmpDir/solarized'"
+    fi
   fi
 
+  # Powerline fonts allow displaying some fancy symbols in neovim (when using
+  # the airline plugin).
+  # https://github.com/vim-airline/vim-airline-themes
+  # https://github.com/powerline/fonts
+  read -p "Install powerline fonts? " -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    tmpDir="$(mktemp -d)"
+    (
+      cd $tmpDir
+      git clone https://github.com/powerline/fonts.git --depth=1
+      cd fonts
+      ./install.sh
+    )
+    if [[ $? -ne 0 ]];then
+      exitWithError "Error during installation. Repo downloaded to '$tmpDir/fonts'"
+    else
+      summary+=("Restart the terminal and select 'Liberation Mono for Powerline' font.")
+    fi
+  fi
 
   echo
-  echo "--------"
   echo "DONE"
+  echo "--------"
+  echo "Next steps:"
+  for line in "${summary[@]}"; do
+    echo "- $line"
+  done
+
 }
 
 isWin() {
