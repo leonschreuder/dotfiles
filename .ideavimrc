@@ -1,4 +1,8 @@
+# How to:
+# - Install IdeaVim trough plugins
+# - Install "Relative Line Numbers" plugin
 
+# This plugin system is builtin
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'preservim/nerdtree'
