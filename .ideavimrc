@@ -1,13 +1,13 @@
-# How to:
-# - Install IdeaVim trough plugins
-# - Install "Relative Line Numbers" plugin
+" How to:
+" - Install IdeaVim trough plugins
+" - Install "Relative Line Numbers" plugin
 
-# This plugin system is builtin
+" This plugin system is builtin
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'preservim/nerdtree'
 Plug 'machakann/vim-highlightedyank'
-Plug 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion' " requires IdeaVim-EasyMotion and AceJump plugins
 
 let mapleader = " "
 
@@ -32,12 +32,13 @@ map ,p <Action>(ParameterInfo)
 imap <C-,>p <C-o><Action>(ParameterInfo)
 map ,f <Action>(FindUsages)
 
-map ,c <Action>(ShowIntentionActions)
+" map ,c <Action>(ShowIntentionActions)
 map ,e <Action>(ShowErrorDescription)
 
 
 map <leader>rr <Action>(RenameElement)
-map <leader>rm <Action>(ExtractMethod)
+" map <leader>rm <Action>(ExtractMethod)
+map <leader>rm <Action>(ShowIntentionActions)
 map <leader>rf <Action>(ExtractFunction)
 map <leader>rv <Action>(IntroduceVariable)
 map <leader>rc <Action>(ChangeSignature)

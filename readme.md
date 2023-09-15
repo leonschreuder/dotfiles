@@ -41,7 +41,18 @@ System setup
 4. Install IntelliJ/Android Studio + plugins:
     - IdeaVim
     - Relative Line Numbers
+    - ktfmt
+    - IdeaVim-EasyMotion (+ Acejump)
     - Color scheme: [idea-semagic](https://github.com/leonschreuder/idea-semagic)
+
+#### IntelliJ settings
+
+- [Inlay Hints] >
+    - [Parameter names] off
+    - [Code vision] > [Code author] off
+- [Appearance & Behavior]
+    - [Reopen projects on startup] off
+
 
 Clean vserver setup guidelines
 ------------------------------------------------------------
