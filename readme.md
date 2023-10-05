@@ -52,6 +52,13 @@ System setup
     - [Code vision] > [Code author] off
 - [Appearance & Behavior]
     - [Reopen projects on startup] off
+- [Editor] > [Code Style] > <each language>
+    - [Wrapping and Braces] > Keep when reformatting
+        - [ ] Comment at first column
+    - [Code Generation] > Comment Code
+        - [ ] Line Comment at first column
+        - [x] Add a space at line comment start
+        - [ ] Block comment at first column
 
 
 Clean vserver setup guidelines
