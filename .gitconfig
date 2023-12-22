@@ -16,7 +16,7 @@
   lola = lol --graph --all
   lolq = lol --graph --decorate-refs='refs/heads/*' --format=\"%C(dim)%h %C(auto)%D%Creset %s\"
   lolqa = lolq --all
-  lole = log --stat --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(auto)%h %C(bold)%s%C(auto)   %C(auto)%D%C(reset)%n    %C(dim)cd:%cd ad:%ad %C(reset)%C(blue)%ae%Creset\"
+  lole = log --stat --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(dim)%h%C(auto) %C(auto)%D%C(reset)%n %C(bold)%s%C(auto) %C(dim)cd:%cd ad:%ad %C(reset)%C(blue)%ae%Creset\"
   lolea = lole --graph --all
   lolu = log  --graph --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(auto)%h %cd %C(blue)%ae%Creset %C(auto)%D%Creset %s\"
   lolua = lolu --all
