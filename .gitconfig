@@ -12,13 +12,13 @@
   tag = cyan bold
   remoteBranch = blue
 [alias]
-  lol = log --decorate --oneline  --format=\"%C(dim)%h %C(auto)%D%Creset %s\"
+  lol = log --decorate --oneline --format=\"%C(dim)%h %C(auto)%D%Creset %s\"
   lola = lol --graph --all
-  lolq = lol --graph --decorate-refs='refs/heads/*' --format=\"%C(dim)%h %C(auto)%D%Creset %s\"
+  lolq = lol --graph --decorate-refs='refs/heads/*'
   lolqa = lolq --all
   lole = log --stat --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(dim)%h%C(auto) %C(auto)%D%C(reset)%n %C(bold)%s%C(auto) %C(dim)cd:%cd ad:%ad %C(reset)%C(blue)%ae%Creset\"
   lolea = lole --graph --all
-  lolu = log  --graph --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(auto)%h %cd %C(blue)%ae%Creset %C(auto)%D%Creset %s\"
+  lolu = log  --graph --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(dim)%h %C(reset)%C(blue)%ae%C(reset) %C(dim)%cd (%ad)%C(reset) %C(auto)%D%Creset %s\"
   lolua = lolu --all
   st = status -s
   upload  = "!f(){ echo "$ $@";"$@";}; f "git fetch --prune" && f "git rebase -i origin/master" && f "git push origin HEAD""
