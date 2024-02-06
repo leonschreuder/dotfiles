@@ -9,14 +9,14 @@
 # GREEN="\[$(tput setaf 2)\]"
 # YELLOW="\[$(tput setaf 3)\]"
 BLUE="\[$(tput setaf 4)\]"
-# PINK="\[$(tput setaf 5)\]"
-# CYAN="\[$(tput setaf 6)\]"
+PINK="\[$(tput setaf 5)\]"
+CYAN="\[$(tput setaf 6)\]"
 WHITE="\[$(tput setaf 7)\]"
 NO_COLLOR="\[$(tput sgr0)\]"
 
 # character repeated to indicate nesting depth
 PRE_CHAR='❱'
-
+PREFIX_COLOR=$BLUE
 
 # tmux & shell state
 #--------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ getGitStatusIndicator() {
 
 # `man bash` -> PROMPTING
 # methods need escaping to not interfere with special charactes
-completePS1=$BLUE
+completePS1=$PREFIX_COLOR
 completePS1+="\$(getPrettyTmuxSessionCount)\$(getNestingDepthIndicator)"
 completePS1+="\$(getPrettyJobCount)"
 completePS1+=$NO_COLLOR
