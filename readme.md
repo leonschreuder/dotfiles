@@ -33,8 +33,8 @@ System setup
   - install browser Extension (see below)
 2. Install firefox + plugins:
     - KeePassXC-Browser
-    - Adblock Plus
-    - uBlock Origin
+    - uBlock Origin and or Adblock Plus
+    - Ghostery (to block popups)
     - Simple Tab Groups (export tabs)
     - when needed (Firefox Multi-Account Containers)
 3. Install [Jet Brains Toolbox App](https://www.jetbrains.com/toolbox-app)
