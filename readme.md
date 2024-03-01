@@ -13,19 +13,19 @@ System setup
 ### Linux setup
 
 1. Install homebrew
-2. Install tmux, git, neovim
+2. Install tmux, git, neovim, curl
 3. Clone dotfiles (this repo) and run `./install.sh`
-4. Clone and setup [vim_settings][https://github.com/leonschreuder/vim_settings] (see readme)
+4. Clone and setup [vim_settings](https://github.com/leonschreuder/vim_settings) (see readme)
 
 ### Windows setup
 
 1. Install gitbash + add english keyboard (+ company setup scripts)
 2. clone and install.sh dotfiles (this repo)
-3. clone and setup [vim_settings][https://github.com/leonschreuder/vim_settings]
+3. clone and setup [vim_settings](https://github.com/leonschreuder/vim_settings)
 
 ### Agnostic setup
 
-1. Install KeepassXC
+1. [Install KeepassXC](https://keepassxc.org/download/#linux)
   - get safe
   - settings:
       - enable browser integration
@@ -36,6 +36,7 @@ System setup
     - uBlock Origin and or Adblock Plus
     - Ghostery (to block popups)
     - Simple Tab Groups (export tabs)
+    - Dark Reader
     - when needed (Firefox Multi-Account Containers)
 3. Install [Jet Brains Toolbox App](https://www.jetbrains.com/toolbox-app)
 4. Install IntelliJ/Android Studio + plugins:
