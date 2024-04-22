@@ -47,18 +47,35 @@ System setup
 
 #### IntelliJ settings
 
-- [Inlay Hints] >
-    - [Parameter names] off
-    - [Code vision] > [Code author] off
-- [Appearance & Behavior]
-    - [Reopen projects on startup] off
-- [Editor] > [Code Style] > <each language>
-    - [Wrapping and Braces] > Keep when reformatting
-        - [ ] Comment at first column
-    - [Code Generation] > Comment Code
-        - [ ] Line Comment at first column
-        - [x] Add a space at line comment start
-        - [ ] Block comment at first column
+##### Plugins:
+- JustSemantics
+- IdeaVim (should be automatically configured after dotfiles repo is installed)
+- Settings Repository (Deprecated)
+
+
+##### Setup settings repo
+- Clone settings-repo repository: https://github.com/leonschreuder/idea-settings.git
+- [File] > [Manage IDE Settings] > [Settings Repository]
+    - [Upstream URL] Set to local repo
+Every change will be commited in the local repo, but must be pushed manually.
+
+
+##### Manual config (should come from Settings Repository)
+
+- [Editor] 
+    - [Inlay Hints] >
+        - [Parameter names] off
+        - [Code vision] > [Code author] off
+    - [Code Style] > <each language>
+        - [Wrapping and Braces] > Keep when reformatting
+            - [ ] Comment at first column
+        - [Code Generation] > Comment Code
+            - [ ] Line Comment at first column
+            - [x] Add a space at line comment start
+            - [ ] Block comment at first column
+- [Appearance & Behavior] 
+    - [System Settings]
+        - [ ] Reopen projects on startup
 
 
 Clean vserver setup guidelines
