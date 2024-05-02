@@ -20,7 +20,9 @@
   lolea = lole --graph --all
   lolu = log  --graph --date=format:\"%Y.%m.%d %H:%m\" --format=\"%C(dim)%h %C(reset)%C(blue)%ae%C(reset) %C(dim)%cd (%ad)%C(reset) %C(auto)%D%Creset %s\"
   lolua = lolu --all
+  logf = log --format=fuller
   st = status -s
+  dated = "!date=\"$(LC_ALL=C date -d \"$1\")\"; shift; read -rp \"Using date '$date'. Press [ENTER] to continue. \" answer && GIT_COMMITTER_DATE=\"$date\" GIT_AUTHOR_DATE=\"$date\" git \"$@\"; :"
   upload  = "!f(){ echo "$ $@";"$@";}; f "git fetch --prune" && f "git rebase -i origin/master" && f "git push origin HEAD""
   bothrename  = "!f(){ echo "$ $@";"$@";}; echo "Renaming local and remote branches to \\'$1\\'." && f "git push origin --delete $(git rev-parse --abbrev-ref HEAD 2> /dev/null)" && f "git branch -m $1" && git push -u; :"
   bothdelete  = "!f(){ echo "$ $@";"$@";}; echo "Deleting local and remote branches for \\'$1\\'." && f "git branch -d $1" && f "git push origin --delete $1" || echo "...or use the alias \\'git bothdeleteforce $1\\' "; :"
