@@ -98,7 +98,7 @@ test_getPrettyGitState() {
 
   result=$(getPrettyGitState)
 
-  assertEquals '(+master)' "$result"
+  assertEquals '+main' "$result"
 }
 
 # HELPERS

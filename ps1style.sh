@@ -67,8 +67,7 @@ intToSuperScript() {
 getPrettyJobCount() {
   jobCount=$( getJobCount )
   if [ $jobCount -gt 0 ]; then
-    echo " ⁽$(intToSuperScript $jobCount)⁾"
-    # echo " $jobCount" 
+    echo "$(intToSuperScript $jobCount)"
   else
     echo ''
   fi
@@ -84,13 +83,24 @@ getJobCount() {
 # prints '(*master)' when on master. The '*' is added when there are local changes
 getPrettyGitState() {
   gitBranch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
-  [[ "$gitBranch" == "" ]] && return # no git repo
+  if [[ "$gitBranch" == "" ]]; then
+    echo "∙"
+  else
+    echo "$(getGitStatusIndicator)$gitBranch"
+  fi
+}
 
-  echo "($(getGitStatusIndicator)$gitBranch)"
+getGitBranch() {
+  gitBranch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+  if [[ "$gitBranch" == "" ]]; then
+    echo "∙"
+  else
+    echo "$gitBranch"
+  fi
 }
 
 getGitStatusIndicator() {
-  status="$(git status --porcelain)"
+  status="$(git status --porcelain 2>/dev/null)"
   [[ "$status" == "" ]] && return
   #  -  everything in index
   #  +  local changes on known files
@@ -112,17 +122,29 @@ getGitStatusIndicator() {
 
 # `man bash` -> PROMPTING
 # methods need escaping to not interfere with special charactes
-completePS1=$PREFIX_COLOR
-completePS1+="\$(getPrettyTmuxSessionCount)\$(getNestingDepthIndicator)"
-completePS1+="\$(getPrettyJobCount)"
-completePS1+=$NO_COLLOR
 
-# \w adds current working dir
-completePS1+=" \w "
 
-completePS1+="\$(getPrettyGitState)"
+lineStartIcon1="╭"
+lineStartIcon2="╰"
+timeIcon="⧗"
+pathIcon="▸"
+gitIcon=""
+# 𝌆 ◯  ¶ ◴ 🮟🮜 ◣◤ ◺◸ ┏ ╓ ╭╰
 
-completePS1+=$WHITE
-completePS1+="$ "
-completePS1+=$NO_COLLOR
-export PS1=$completePS1
+time="$PREFIX_COLOR$timeIcon$NO_COLLOR \t" # \t adds time with seconds
+path="$PREFIX_COLOR$pathIcon$NO_COLLOR \w" # \w adds current working dir
+git="$PREFIX_COLOR$gitIcon$NO_COLLOR \$(getGitBranch) \$(getGitStatusIndicator)"
+
+tmuxSessionCount="$PREFIX_COLOR\$(getPrettyTmuxSessionCount)$NO_COLLOR"
+nestingIndicator="$PREFIX_COLOR\$(getNestingDepthIndicator)$NO_COLLOR"
+jobCount="$WHITE\$(getPrettyJobCount)$NO_COLLOR"
+
+prefixLine1="$PREFIX_COLOR$lineStartIcon1$NO_COLLOR"
+prefixLine2="$PREFIX_COLOR$lineStartIcon2$NO_COLLOR"
+
+completePS1=""
+completePS1+="$prefixLine1 $time   $path   $git"
+completePS1+="\n"
+completePS1+="$prefixLine2 $tmuxSessionCount$nestingIndicator $jobCount$ "
+
+export PS1="$completePS1"
