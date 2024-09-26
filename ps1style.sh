@@ -106,16 +106,26 @@ getGitStatusIndicator() {
   #  +  local changes on known files
   #  *  repo has unstaged files
 
-  while IFS='\n' read -r line; do
-    if [[ "$line" =~ ^[A-Z][[:space:]] ]];then # current change is staged
-      [ "$indicator" == "" ] && indicator="-"
-    elif [[ "$line" =~ ^.[A-Z] ]];then # current change is or has unstaged parts
-      [ "$indicator" != "*" ] && indicator="+"
-    elif [[ "$line" =~ ^\? ]];then # current change is or has unstaged parts
-      indicator="*"
-      break
+  hasStaged="false"
+  hasUnstaged="false"
+  hasUntracked="false"
+  while IFS=$'\n' read -r line; do
+    if [[ "$line" =~ ^[A-Z] ]]; then  # has staged changes
+      hasStaged="true"
+    fi
+    if [[ "$line" =~ ^.[A-Z] ]]; then  # current change is unstaged, or has unstaged parts
+      hasUnstaged="true"
+    fi
+    if [[ "$line" =~ ^\? ]]; then  # has untracked files
+      hasUntracked="true"
     fi
   done <<< "$status"
+  indicator=""
+  [[ "$hasStaged" == "true" ]] && indicator+="+"
+  [[ "$hasUnstaged" == "true" ]] && indicator+="-"
+  [[ "$hasUntracked" == "true" ]] && indicator+="?"
+
+
   echo -n "$indicator"
 }
 

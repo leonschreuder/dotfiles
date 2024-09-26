@@ -74,40 +74,46 @@ test_should_indicate_changes() {
   initEmptyGitRepo
 
   # no change no indicator
-  # (master) -> no changes
   assertEquals "" "$(getGitStatusIndicator)"
 
-  # (+master) -> only changed or added files
+  # has changes to tracked files
   echo "a" > file.txt
-  assertEquals "+" "$(getGitStatusIndicator)"
-
-  # (-master) -> only files alrady added to the index
-  git add .
   assertEquals "-" "$(getGitStatusIndicator)"
 
-  # (*master) -> changed and new files
+  # changes to tracked files are all added to index
+  git add .
+  assertEquals "+" "$(getGitStatusIndicator)"
+
+  # changes that are partly added to index
   echo "b" >> file.txt
+  assertEquals "+-" "$(getGitStatusIndicator)"
+
+  # also untracked files
   touch newFile.txt
-  assertEquals "*" "$(getGitStatusIndicator)"
+  assertEquals "+-?" "$(getGitStatusIndicator)"
+
+  # only untracked files
+  git reset --hard &>/dev/null
+  assertEquals "?" "$(getGitStatusIndicator)"
 }
 
 test_getPrettyGitState() {
-  cd $TEST_DIR
+  cd "$TEST_DIR" || :
   initEmptyGitRepo
   echo "a" > file.txt
 
   result=$(getPrettyGitState)
 
-  assertEquals '+main' "$result"
+  assertEquals '-main' "$result"
 }
 
 # HELPERS
 #--------------------------------------------------------------------------------
 
 killTillDead() {
-  echo $1 &> /dev/null | xargs kill -9
+  echo "$@" | xargs kill -9 2>/dev/null
   # this takes a little bit, so wait to not mess up the other tests.
-  wait $1
+  wait "$@"
 }
 
 initEmptyGitRepo() {
