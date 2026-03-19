@@ -36,7 +36,7 @@ fi
 # https://github.com/mtklr/kitty-nyancat-icon/blob/main/kitty.app.png
 if [[ ! -e ~/.config/kitty/kitty.app.png ]]; then
   echo "Downloading custom app icon..."
-  curl -k https://github.com/mtklr/kitty-nyancat-icon/blob/main/kitty.app.png?raw=true > ~/.config/kitty/kitty.app.png
+  curl -k https://raw.githubusercontent.com/mtklr/kitty-nyancat-icon/refs/heads/main/kitty.app.png > ~/.config/kitty/kitty.app.png
 fi
 
 # desktop integration on linux: 
