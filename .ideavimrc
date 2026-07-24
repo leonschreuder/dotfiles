@@ -2,7 +2,8 @@
 " - Install IdeaVim trough plugins
 " - Install "Relative Line Numbers" plugin
 
-" This plugin system is builtin
+" Only some plugins seem to be available:
+" - https://github.com/JetBrains/ideavim/blob/master/doc/IdeaVim%20Plugins.md
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'preservim/nerdtree'
@@ -32,18 +33,27 @@ map ,p <Action>(ParameterInfo)
 imap <C-,>p <C-o><Action>(ParameterInfo)
 map ,f <Action>(FindUsages)
 
+" in an effort to reduce strain on my pinky
+noremap ,l :tabnext<CR>
+noremap ,h :tabprevious<CR>
+
+" move to next/previous git change
+map ]g <Action>(VcsShowNextChangeMarker)
+map [g <Action>(VcsShowPrevChangeMarker)
+
 " map ,c <Action>(ShowIntentionActions)
 map ,e <Action>(ShowErrorDescription)
 
-
 map <leader>rr <Action>(RenameElement)
-" map <leader>rm <Action>(ExtractMethod)
 map <leader>rm <Action>(ShowIntentionActions)
-map <leader>rf <Action>(ExtractFunction)
 map <leader>rv <Action>(IntroduceVariable)
 map <leader>rc <Action>(ChangeSignature)
 map <leader>ri <Action>(Inline)
 map <leader>rg <Action>(Generate)
+map <leader>rt <Action>(InsertLiveTemplate)
+
+map <leader>rf <Action>(ExtractFunction)
+" map <leader>rf <Action>(ExtractMethod)
 
 noremap <C-j> 3<C-e>
 noremap <C-k> 3<C-y>
@@ -69,6 +79,7 @@ map <leader>wh <Action>(HideAllWindows)
 " map <leader>n <Action>(ActivateProjectToolWindow)
 map <leader>n :NERDTreeToggle<CR>
 map <leader>N :NERDTreeFind<CR>
+map <leader>a <Action>(ActivateStructureToolWindow)
 
 
 "   :actionlist [pattern]
