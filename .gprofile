@@ -67,7 +67,7 @@ fi
 # export TERM=screen-256color-bce
 # export HISTTIMEFORMAT='%F %T '
 
-if hash nvim 2>/dev/null; then
+if command -v nvim >/dev/null; then
     export EDITOR=nvim
     alias vim='nvim'
 else
@@ -82,7 +82,7 @@ fi
 
 # Golang
 #----------------------------------------
-if hash go 2>/dev/null; then
+if command -v go >/dev/null; then
     export GOROOT=$BREW_HOME/opt/go/libexec
     export GOPATH=$HOME/repos/go
     export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
@@ -90,7 +90,7 @@ fi
 
 # P4
 #----------------------------------------
-if hash p4 2>/dev/null; then
+if command -v p4 >/dev/null; then
     if [ -s ~/.p4profile ]; then
         source ~/.p4profile
     fi
@@ -98,13 +98,13 @@ fi
 
 # Par
 #----------------------------------------
-if hash par 2>/dev/null; then
+if command -v par >/dev/null; then
     export PARINIT='rTbgqR B=.,?_A_a P=_s Q=>|}'
 fi
 
 # colors for `ls`
 #----------------------------------------
-if hash dircolors 2>/dev/null; then
+if command -v dircolors >/dev/null; then
     eval `dircolors $SCRIPT_DIR/dircolors.256dark`
 fi
 

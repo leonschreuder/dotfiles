@@ -12,10 +12,9 @@ System setup
 
 ### Linux setup
 
-1. Install homebrew
-2. Install tmux, git, neovim, curl
-3. Clone dotfiles (this repo) and run `./install.sh`
-4. Clone and setup [vim_settings](https://github.com/leonschreuder/vim_settings) (see readme)
+1. Install neovim, (homebrew, git, curl)
+2. Clone dotfiles (this repo) and run `./install.sh`
+3. Clone and setup [vim_settings](https://github.com/leonschreuder/vim_settings) (see readme)
 
 ### Windows setup
 
@@ -33,8 +32,8 @@ System setup
   - install browser Extension (see below)
 2. Install firefox + plugins:
     - KeePassXC-Browser
-    - uBlock Origin and or Adblock Plus
-    - Ghostery (to block popups)
+    - uBlock Origin (or Adblock Plus)
+    - Ghostery (to block popups and inline ads)
     - Simple Tab Groups (export tabs)
     - Dark Reader
     - when needed (Firefox Multi-Account Containers)
@@ -44,7 +43,7 @@ System setup
     - Relative Line Numbers
     - ktfmt
     - IdeaVim-EasyMotion (+ Acejump)
-    - Color scheme: [idea-semagic](https://github.com/leonschreuder/idea-semagic)
+    - JustSemantics
 
 #### IntelliJ settings
 

@@ -10,7 +10,7 @@ main() {
   setupCustomRcLoading
 
   # installSolarized
-  installOneDark
+  # installOneDark
 
   installPowerlineFonts
 
