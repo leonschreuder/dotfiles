@@ -9,8 +9,8 @@ main() {
   symlinkFiles
   setupCustomRcLoading
 
-  installPowerlineFonts
   installZ
+  installAptPackages
 
   echo
   echo "DONE"
@@ -43,33 +43,16 @@ setupCustomRcLoading() {
   summary+=("Fill $HOME/.lprofile with cusom settings like JAVA_HOME etc.")
 }
 
-installPowerlineFonts() {
-  # Powerline fonts allow displaying some fancy symbols in neovim (when using
-  # the airline plugin).
-  # https://github.com/vim-airline/vim-airline-themes
-  # https://github.com/powerline/fonts
-  read -p "Install powerline fonts? " -n 1 -r REPLY
-  echo
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    tmpDir="$(mktemp -d)"
-    (
-      cd $tmpDir
-      git clone https://github.com/powerline/fonts.git --depth=1
-      cd fonts
-      ./install.sh
-    )
-    if [[ $? -ne 0 ]];then
-      exitWithError "Error during installation. Repo downloaded to '$tmpDir/fonts'"
-    else
-      summary+=("Restart the terminal and select 'Liberation Mono for Powerline' font.")
-    fi
-  fi
-}
-
 installZ() {
   mkdir -p ~/lib/
   cd ~/lib/
   git clone https://github.com/skywind3000/z.lua
+}
+
+installAptPackages() {
+  sudo apt-get install fonts-powerline
+  sudo apt install fzf
+  sudo apt install lua5.4
 }
 
 exitWithError() {

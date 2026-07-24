@@ -121,4 +121,6 @@ if [ "$TERMINAL_EMULATOR" = "JetBrains"* ] && [ ! -v "$PROCESS_LAUNCHED_BY_Q" ];
 fi
 
 # enable z.lua
-eval "$(lua $HOME/lib/z.lua/z.lua --init bash enhanced once fzf)"
+if command -v lua >/dev/null; then
+  eval "$(lua $HOME/lib/z.lua/z.lua --init bash enhanced once fzf)"
+fi
