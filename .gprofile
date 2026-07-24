@@ -114,3 +114,11 @@ source $SCRIPT_DIR/ps1style.sh
 source $SCRIPT_DIR/globalFuncs.sh
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# disable history in tabnine terminal
+if [ "$TERMINAL_EMULATOR" = "JetBrains"* ] && [ ! -v "$PROCESS_LAUNCHED_BY_Q" ]; then
+  set +o history
+fi
+
+# enable z.lua
+eval "$(lua $HOME/lib/z.lua/z.lua --init bash enhanced once fzf)"
