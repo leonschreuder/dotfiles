@@ -33,7 +33,7 @@ fi
 
 # Note: Resolving program paths (including homebrew) need to be done before referencing them
 
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$SCRIPT_DIR/bin:$PATH
 
 
 # Homebrew

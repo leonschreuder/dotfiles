@@ -1,0 +1,28 @@
+#!/bin/sh
+
+help() {
+  echo "nethost
+
+Used in tandom with netget
+Hosts compressed raw data through 'nc' that can be received using netget.
+"
+}
+
+main() {
+  while getopts '' opt; do
+    case "$opt" in
+      h)
+        help
+        exit 0
+        ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  tar -cz . | nc -q 10 -l -p 45454
+}
+
+die() { echo "ERROR: $*"; exit 1; }
+
+
+main "$@"

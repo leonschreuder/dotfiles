@@ -1,0 +1,33 @@
+#!/bin/sh
+
+help() {
+  echo "netget
+
+Used in tandom with nethost
+Receives compressed raw data from the host through 'nc'.
+"
+}
+
+main() {
+  while getopts '' opt; do
+    case "$opt" in
+      h)
+        help
+        exit 0
+        ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+
+  if [ "$1" == "" ]];then
+    die "Please provide the IP Address of the host machine to receive data from."
+  fi
+
+  nc -w 10 $1 45454 | tar -xz
+}
+
+die() { echo "ERROR: $*"; exit 1; }
+
+
+main "$@"
