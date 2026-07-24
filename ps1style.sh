@@ -136,12 +136,12 @@ getGitStatusIndicator() {
 
 lineStartIcon1="╭"
 lineStartIcon2="╰"
-timeIcon="⧗"
-pathIcon="▸"
+timeIcon="꒾"
+pathIcon="►"
 gitIcon=""
 # 𝌆 ◯  ¶ ◴ 🮟🮜 ◣◤ ◺◸ ┏ ╓ ╭╰
 
-time="$PREFIX_COLOR$timeIcon$NO_COLLOR \t" # \t adds time with seconds
+time="$PREFIX_COLOR$timeIcon$NO_COLLOR\t" # \t adds time with seconds
 path="$PREFIX_COLOR$pathIcon$NO_COLLOR \w" # \w adds current working dir
 git="$PREFIX_COLOR$gitIcon$NO_COLLOR \$(getGitBranch) \$(getGitStatusIndicator)"
 
