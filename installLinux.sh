@@ -9,10 +9,8 @@ main() {
   symlinkFiles
   setupCustomRcLoading
 
-  # installSolarized
-  # installOneDark
-
   installPowerlineFonts
+  installZ
 
   echo
   echo "DONE"
@@ -45,45 +43,6 @@ setupCustomRcLoading() {
   summary+=("Fill $HOME/.lprofile with cusom settings like JAVA_HOME etc.")
 }
 
-installOneDark() {
-  tmpDir="$(mktemp -d)"
-  cd "$tmpDir" || exitWithError "could not cd into '$tmpDir'"
-  curl -fsSL https://raw.githubusercontent.com/denysdovhan/gnome-terminal-one/master/one-dark.sh -O
-  chmod +x one-dark.sh
-  ./one-dark.sh
-}
-
-installSolarized() {
-  echo "Install solarized?"
-  echo "[0] gnome terminal"
-  echo "[1] xfce4-terminal"
-  read -p "Anser (any other skips): " -n 1 -r REPLY
-
-  if [[ $REPLY =~ ^0$ ]]; then
-    echo "Installing for xfce4-terminal"
-    tmpDir="$(mktemp -d)"
-    (
-      cd $tmpDir
-      git clone https://github.com/sigurdga/gnome-terminal-colors-solarized.git solarized
-      ./solarized/install.sh
-    )
-    if [[ $? -ne 0 ]]; then
-      echo "ERROR during installation. Repo downloaded to '$tmpDir/solarized'"
-    fi
-  elif [[ $REPLY =~ ^1$ ]]; then
-    tmpDir="$(mktemp -d)"
-    (
-      cd "$tmpDir"
-      git clone https://github.com/nimbosa/solarized-xfce4-terminal-colors.git solarized
-      mkdir -p ~/.config/Terminal/
-      cp ./solarized/dark/terminalrc ~/.config/Terminal/terminalrc
-    )
-    if [[ $? -ne 0 ]]; then
-      echo "ERROR during installation. Repo downloaded to '$tmpDir/solarized'"
-    fi
-  fi
-}
-
 installPowerlineFonts() {
   # Powerline fonts allow displaying some fancy symbols in neovim (when using
   # the airline plugin).
@@ -105,6 +64,12 @@ installPowerlineFonts() {
       summary+=("Restart the terminal and select 'Liberation Mono for Powerline' font.")
     fi
   fi
+}
+
+installZ() {
+  mkdir -p ~/lib/
+  cd ~/lib/
+  git clone https://github.com/skywind3000/z.lua
 }
 
 exitWithError() {

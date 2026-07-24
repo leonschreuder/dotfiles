@@ -13,8 +13,9 @@ System setup
 ### Linux setup
 
 1. Install neovim, (homebrew, git, curl)
-2. Clone dotfiles (this repo) and run `./install.sh`
-3. Clone and setup [vim_settings](https://github.com/leonschreuder/vim_settings) (see readme)
+2. Clone dotfiles (this repo) and run `./installLinux.sh` or `./installWindows.sh` respectively
+3. Install kitty using `./installKitty.sh`
+4. Clone and setup [vim_settings](https://github.com/leonschreuder/vim_settings) (see readme)
 
 ### Windows setup
 
